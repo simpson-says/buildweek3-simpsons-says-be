@@ -17,7 +17,7 @@ function register(req, res) {
   
     db('users')
       .insert(req.body)
-      .returning('id')
+      .returning("id")
       .then(ids => {
         const id = ids[0];
         db('users')
