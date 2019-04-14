@@ -21,6 +21,7 @@ function register(req, res) {
         const id = ids[0];
         db('users')
           .where({ id })
+          .returning('id')
           .first()
           .then(user => {
             res.status(200).json(user);
