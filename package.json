@@ -6,7 +6,7 @@
 	"scripts": {
 		"server": "nodemon index.js DB_ENV=development",
 		"test": "cross-env DB_ENV=testing && jest --watch",
-		"start": "node index.js"
+		"start": "node index.js && yarn knex migrate:latest"
 	},
 	"jest": {
 		"testEnvironment": "node"
