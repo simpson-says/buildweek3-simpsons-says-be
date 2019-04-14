@@ -17,11 +17,11 @@ function register(req, res) {
   
     db('users')
       .insert(req.body)
+      .returning('id')
       .then(ids => {
         const id = ids[0];
         db('users')
           .where({ id })
-          .returning('id')
           .first()
           .then(user => {
             res.status(200).json(user);
