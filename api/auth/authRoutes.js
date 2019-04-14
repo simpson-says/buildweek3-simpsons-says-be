@@ -23,9 +23,7 @@ function register(req, res) {
         db('users')
           .where({ id })
           .first()
-          .then(user => {
-            res.status(200).json(user);
-          });
+          .then(user => {res.status(200).json(user)});
       })
       .catch(error => {
         res.status(500).json(error);

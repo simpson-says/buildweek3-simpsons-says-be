@@ -11,10 +11,16 @@ const productionDbConnection = process.env.DATABASE_URL || localPg;
 module.exports = {
   development: {
     useNullAsDefault: true,
-
+    
     client: 'sqlite3',
     connection: {
-      filename: './data/productionDB.db3',
+      filename: './data/developmentDB.db3',
+    },
+
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done); // enforce FK
+      }
     },
 
     migrations: {
