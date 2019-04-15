@@ -130,7 +130,7 @@ function register(req, res) {
 * @api {post} /api/Login Logs User in
 * @apiName User Login
 * @apiGroup Authentication
-* @apiParamExample {json} Input
+* @apiParamExample {json} Input 
 *    {
 *       "username": "homer",
 *       "password": "password"
