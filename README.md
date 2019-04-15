@@ -1,5 +1,7 @@
 # backend
 
+Heroku Deployment Link: https://simpson-says.herokuapp.com/
+
 Endpoints ?
 
 /getUser - gets new user data
