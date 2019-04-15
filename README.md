@@ -11,7 +11,7 @@ https://simpson-says.herokuapp.com/
 | /register  | GET  -retrieves new username and password                     | string / string  |
 | /login     | GET  -retrieves username and password                         | string / string  |
 | /favorites | GET  -retrieves a list of existing favorite quotes            | array of strings |
-|            | POST -adds new favorite quote to existing list                | string           |
+               POST -adds new favorite quote to existing list                  string            
 | /search    | GET  -retrieves user search string                            | string           |
 | /generator | GET  -retrieves random quote from database based on character | string           |
 
