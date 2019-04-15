@@ -1,5 +1,9 @@
 # backend
 
+https://simpson-says.herokuapp.com/
+
+npm run server to start
+
 #Endpoints
 
 User API has the following endpoints:
@@ -27,6 +31,9 @@ User API has the following endpoints:
 * POST to /generator to display new quote based on character to FE
 
     -- outputs a quote (string)
+
+
+
 
 
 GET to '/register'
