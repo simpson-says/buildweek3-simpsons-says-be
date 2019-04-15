@@ -1,7 +1,7 @@
 {
 	"name": "simpsons-say",
 	"version": "1.0.0",
-	"description": "Simspon Quotes",
+	"description": "Simpson Quotes",
 	"main": "index.js",
 	"scripts": {
 		"server": "nodemon index.js DB_ENV=development",

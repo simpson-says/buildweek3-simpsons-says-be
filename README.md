@@ -1,15 +1,29 @@
 # backend
 
-Heroku Deployment Link: https://simpson-says.herokuapp.com/
+#Endpoints
 
-Endpoints ?
+User API has the following endpoints:
 
-/getUser - gets new user data
+* GET to '/register' for retrieving new username and password
 
-/addUser - adds user to authorized user db
+    -- accepts username (string) and password (string)
 
-/getSearch - get user search words
+* GET to '/login" for retrieving username and password
 
-/getQuotes - get quotes from db
+    -- gets username (string) and password (string)
 
-/displayQuotes - send quotes to FE display if search words are matched (NLP methods)
+* GET to /favorites to get a list of existing favorites
+
+    -- gets array of favorite quotes (strings)
+
+* POST to /favorites to add new favorites to existing list
+
+    -- outputs a favorite quote (string)
+
+* GET to /search to retrieve user search string
+
+    -- takes in user search words (string)
+
+* POST to /generator to display new quote based on character to FE
+
+    -- outputs a quote (string)
