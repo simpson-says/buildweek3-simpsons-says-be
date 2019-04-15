@@ -13,7 +13,9 @@ module.exports = server => {
 /**
 * @api{get} /api/users Request All User Data
 * @apiName Get Users
-* @apiPermission Admin
+* @apiDescription This Endpoint is used by Authorized users with granted permissions to retrieve all stored users from the database
+* @apiPermission admin
+*
 * @apiGroup Admin
 * 
 * @apiHeader (Authorization) {Object} headers                           This is the Request headers 
@@ -57,6 +59,14 @@ module.exports = server => {
 * @apiSuccess {String}  Users.User.username  Users Username
 * @apiSuccess {String}  Users.User.password  Users hashed and salted password
 * @apiSuccess {String}  Users.User.role      Users Permissions
+*
+* @apiError 404     You are not authorized to access this end point
+*
+* @apiErrorExample Error-Response:
+*     HTTP/1.1 404 Bad Request
+*     {
+*       "message": "You are not authorized to access this end point"
+*     }
 */
 function getUsers(req, res) {
   // implement user registration
@@ -94,8 +104,8 @@ function getUsers(req, res) {
 * @apiSuccess {string} newUser.role Users Permissions
 *
 *
-* @apiError Submission Failed to submit one or more REQUIRED field
-
+* @apiError 422-Unprocessable-entity Failed to submit one or more REQUIRED field
+*
 * @apiErrorExample Error-Response:
 *     HTTP/1.1 422 Unprocessable Entity
 *     {
@@ -126,6 +136,7 @@ function register(req, res) {
         })
     : res.status(422).json({message:"Please fill out a username & password before submitting"})
 }
+
 /**
 * @api {post} /api/Login Logs User in
 * @apiName User Login
@@ -136,7 +147,7 @@ function register(req, res) {
 *       "password": "password"
 *     }
 *
-* @apiParam {Object} User               User
+* @apiParam {Object} User                User
 * @apiParam {Number} User.id            user id.
 * @apiParam {String} User.password      Password.
 *
@@ -153,13 +164,14 @@ function register(req, res) {
 *
 *
 * @apiError Submission Failed to submit one or more REQUIRED field
-
+*
 * @apiErrorExample Error-Response:
 *     HTTP/1.1 422 Unprocessable Entity
 *     {
 *       "message":"Please fill out a username & password before submitting"
 *     }
 */
+
 function login(req, res) {
   // implement user login
   let { username, password } = req.body;
@@ -190,3 +202,6 @@ function login(req, res) {
       })
   : res.status(422).json({message:"Please fill out a username & password before submitting"})
 }
+
+
+

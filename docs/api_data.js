@@ -4,9 +4,10 @@ define({ "api": [
     "url": "/api/users",
     "title": "Request All User Data",
     "name": "Get_Users",
+    "description": "<p>This Endpoint is used by Authorized users with granted permissions to retrieve all stored users from the database</p>",
     "permission": [
       {
-        "name": "Admin"
+        "name": "admin"
       }
     ],
     "group": "Admin",
@@ -98,6 +99,25 @@ define({ "api": [
           }
         ]
       }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "404",
+            "description": "<p>You are not authorized to access this end point</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Bad Request\n{\n  \"message\": \"You are not authorized to access this end point\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "version": "0.0.0",
     "filename": "./api/auth/authRoutes.js",
@@ -198,7 +218,7 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "Submission",
+            "field": "422-Unprocessable-entity",
             "description": "<p>Failed to submit one or more REQUIRED field</p>"
           }
         ]
@@ -224,7 +244,7 @@ define({ "api": [
     "parameter": {
       "examples": [
         {
-          "title": "Input",
+          "title": "Input ",
           "content": "{\n   \"username\": \"homer\",\n   \"password\": \"password\"\n }",
           "type": "json"
         }

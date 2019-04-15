@@ -40,16 +40,17 @@ describe('Authentication Router Tests', () => {
         describe('Successful login', () => {
             
             it('should respond with status code 200', async () => {
-                await request(server)
+                return await request(server)
                         .post('/api/register')
                         .send({ username: "George", password:"thisWouldBeHashed" })
-                        .expect(200);
-                    
-                return request(server)
-                        .post('/api/login')
-                        .send({ username: "George", password:"thisWouldBeHashed" })
-                        .expect(200);
-                        
+                        .expect(200)
+                        .then(res => {
+                            request(server)
+                                .post('/api/login')
+                                .send({ username: "George", password:"thisWouldBeHashed" })
+                                .expect(200);
+                        })
+                        .catch(err => res.status(500).json({message:"Internal Server Error adding the new User"}))       
             });
     
             // it("successfully adds a new user to the db", async () => {
