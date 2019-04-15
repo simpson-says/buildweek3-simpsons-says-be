@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"server": "nodemon index.js DB_ENV=development",
-		"test": "cross-env DB_ENV=testing && jest --watch",
+		"test": "cross-env DB_ENV=testing && yarn knex migrate:latest && jest --watchAll",
 		"start": "node index.js"
 	},
 	"jest": {
