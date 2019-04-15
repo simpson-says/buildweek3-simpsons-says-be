@@ -29,7 +29,7 @@ describe('/api/login POST', () => {
 });
 
 // POST - for new user registration - will add user to users db
-describe('/api/addUser POST', () => {
+describe('/api/register POST', () => {
     describe('User is now registered.', () => {
         
         // expected response
@@ -49,7 +49,7 @@ describe('/api/addUser POST', () => {
                     expect(users.length).toBe(1);
         
             await request(server)
-                .post('/api/addUser')
+                .post('/api/register')
                 .send({ username: 'userName3', password: 'abcd' });
                     let users = await db('users');
                     expect(users).toHaveLength(2);

@@ -1,55 +1,67 @@
-const db = require('../../data/dbConfig')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
-const secret = process.env.JWT_SECRET;
+const axios = require('axios');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
+const db = require('./authenticate');
+const secret = process.env.shh || 'abcd';
 
-// authorized user login
-login = (req, res) => {
-    let { username, pw } = req.body;
-
-    db('users')
-      .where({ username })
-      .first()
-      .then(user => {
-        const payload = { item: user.username }
-        const options = { expire: '1d' }
-        const token = jwt.sign(payload, secret, options)
-  
-        if (bcrypt.compareSync(pw, user.pw)){
-          res.status(200).json({ message: `Welcome back, ${user.username}!`, token })
-        } else {
-          res
-            .status(401)
-            .json({ message: 'Incorrect usernamme or password.' });
-        }
-      })
-      .catch(err => {
-        res.status(500).json({err});
-      });
-
-
-// add a new user
-addUser = (req, res) => {
-    let { pw } = req.body;
-    req.body.pw = bcrypt.hashSync(pw, 8); // hash PW
-  
-    db('users')
-      .insert(req.body)
-      .returning('id')
-      .then(ids => {
-
-        const id = ids[1];
-        db('users')
-          .where({ id })
-          .first()
-          .then(user => { res.status(200).json({ message: 'New user created and added', user }); });
-      })
-      .catch(err => { res.status(500).json({ errorMessage: 'Unable to create user.', err });
-      });
-}
-}
+require('../auth/authenticate').jwtKey;
+const { authenticate } = require('../auth/authenticate');
 
 module.exports = server => {
- 
+	server.post('/api/register', register);
+	server.post('/api/login', login);
+};
+
+register = (req, res) => {
+	const user = req.body;
+	const hash = bcrypt.hashSync(user.password, 8);
+	user.password = hash;
+
+	if (user.username && user.password) {
+		db
+			.addUser(user)
+			.then(user => {
+				res.status(201).json(user);
+			})
+			.catch(err => {
+				res.status(500).json({ message: 'Could not add user.' });
+			});
+	} else {
+		res.status(401).json({ message: 'Username and password required.' });
+	}
+};
+
+login = (req, res) => {
+	const { username, password } = req.body;
+
+	if (username && password) {
+		db
+			.getUserByName({ username })
+			.then(user => {
+				if (bcrypt.compareSync(password, user.password)) {
+					const token = generateToken(user);
+
+					res.status(200).json({ message: 'Logged in', token });
+				} else {
+					res.status(401).json({ message: 'Username or password is invalid.' });
+				}
+			})
+			.catch(err => {
+				res.status(500).json({ message: 'Could not log in' });
+			});
+	} else {
+		res.status(401).json({ message: 'Username and password required.' });
+	}
+};
+
+generateToken = user => {
+	const payload = {
+		subject: user.id,
+		username: user.username
+	};
+	const options = {
+		expiresIn: '1d'
+	};
+	return jwt.sign(payload, secret, options);
 };
