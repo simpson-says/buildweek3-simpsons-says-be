@@ -1,0 +1,8 @@
+{
+    "name": "Simpson Says",
+    "version": "1.0.0",
+    "description": "API For Simpson Says",
+    "template": {
+        "forceLanguage": "en"
+    }
+}

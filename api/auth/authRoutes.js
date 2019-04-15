@@ -10,12 +10,57 @@ module.exports = server => {
   server.get('/api/admin/users', authenticate, validateRole, getUsers);
 };
 
+/**
+ * @api{get} /api/users Request All User Data
+ * @apiName Get Users
+ * @apiPermission Admin
+ * @apiGroup Admin
+ */
 function getUsers(req, res) {
   // implement user registration
     db('users')
       .then(users => res.status(200).json(users))
       .catch(err => res.status(500).json({message:err}))
 }
+/**
+* @api {post} /api/register Registers New User
+* @apiName Register User
+* @apiGroup Authentication
+* @apiParamExample {json} Input
+*    {
+*      "username": "doe",
+*      "role": "user"
+*    }.
+*
+* @apiParam {object} newUser New User
+* @apiParam {number} newUser.id  New user id.
+* @apiParam {String} newUser.password  New Password.
+* @apiParam {role} [newUser.role=user]  Users Permissions 
+*
+* @apiSuccessExample Success-Response:
+*     HTTP/1.1 200 OK
+*     {
+*       "id": 1,
+*       "username": "doe",
+*       "password": "password"
+*       "role": "user"
+*     }
+*
+* @apiSuccess {object} newUser New User Object
+* @apiSuccess {number} newUser.id  New users id.
+* @apiSuccess {string} newUser.username Users Username
+* @apiSuccess {string} newUser.role Users Permissions
+*
+*
+* @apiError Submission Failed to submit one or more REQUIRED field
+
+* @apiErrorExample Error-Response:
+*     HTTP/1.1 422 Unprocessable Entity
+*     {
+*       "message":"Please fill out a username & password before submitting"
+*     }
+*/
+
 
 function register(req, res) {
   // implement user registration
@@ -32,14 +77,18 @@ function register(req, res) {
             .where({ id })
             .first()
             .then(user => {res.status(200).json({username:user.username, id:user.id, role: user.role})})
-            .catch(error => {res.status(500).json(error)})
+            .catch(error => {res.status(500).json({message:"Internal Server Error finding the new User"})})
         })
         .catch(error => {
-          res.status(500).json(error);
+          res.status(500).json({message:"Internal Server Error adding the new User"});
         })
     : res.status(422).json({message:"Please fill out a username & password before submitting"})
 }
-
+/**
+ * @api{post} /api/login Login user
+ * @apiName Login User
+ * @apiGroup Authentication
+ */
 function login(req, res) {
   // implement user login
   let { username, password } = req.body;
