@@ -10,19 +10,98 @@ define({ "api": [
       }
     ],
     "group": "Admin",
+    "header": {
+      "fields": {
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers",
+            "description": "<p>This is the Request headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers.Authorization",
+            "description": "<p>This is the Autorization object within the headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "headers.Authorization.token",
+            "description": "<p>This is the Autorization token recieved and stored upon login</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Authorization Header-Example:",
+          "content": " {\n   \"headers\": \"Authorizaton\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n[\n  {\n    \"id\": 1,\n    \"username\": \"omar\",\n    \"password\": \"$2a$10$SQpZI3OokvrWR80bFmrlD.BNVSlqbHDGhZRgqhrWr8bhbHgyBH7Uq\",\n    \"role\": \"admin\"\n  },\n  {\n    \"id\": 2,\n    \"username\": \"adam\",\n    \"password\": \"$2a$10$BlMZckrdp5QBVSdW/ZfncOyTlBXRGoFjFZ5h9UOm4mfbH2Jbvuvn6\",\n    \"role\": \"user\"\n  },\n  {\n    \"id\": 3,\n    \"username\": \"victor\",\n    \"password\": \"$2a$10$hVJEKAlxlWAKHaBhDu7W9uxWouxNqO5wJS0tPPM65uYCzSpMgPcpC\",\n    \"role\": \"user\"\n  },\n  ...\n]",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Users",
+            "description": "<p>Array of stored User Objects</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Users.User",
+            "description": "<p>User Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Users.User.id",
+            "description": "<p>Users id.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Users.User.username",
+            "description": "<p>Users Username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Users.User.password",
+            "description": "<p>Users hashed and salted password</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Users.User.role",
+            "description": "<p>Users Permissions</p>"
+          }
+        ]
+      }
+    },
     "version": "0.0.0",
     "filename": "./api/auth/authRoutes.js",
     "groupTitle": "Admin"
-  },
-  {
-    "type": "post",
-    "url": "/api/login",
-    "title": "Login user",
-    "name": "Login_User",
-    "group": "Authentication",
-    "version": "0.0.0",
-    "filename": "./api/auth/authRoutes.js",
-    "groupTitle": "Authentication"
   },
   {
     "type": "post",
@@ -109,6 +188,103 @@ define({ "api": [
             "optional": false,
             "field": "newUser.role",
             "description": "<p>Users Permissions</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Submission",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n  \"message\":\"Please fill out a username & password before submitting\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/auth/authRoutes.js",
+    "groupTitle": "Authentication"
+  },
+  {
+    "type": "post",
+    "url": "/api/Login",
+    "title": "Logs User in",
+    "name": "User_Login",
+    "group": "Authentication",
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n   \"username\": \"homer\",\n   \"password\": \"password\"\n }",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "User",
+            "description": "<p>User</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "User.id",
+            "description": "<p>user id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "User.password",
+            "description": "<p>Password.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n  \"message\": \"Hello homer\",\n  \"token\": \"eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Response Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.message",
+            "description": "<p>Greeting Message to User</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.token",
+            "description": "<p>Authentication token</p>"
           }
         ]
       }

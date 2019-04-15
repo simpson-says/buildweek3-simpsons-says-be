@@ -11,11 +11,53 @@ module.exports = server => {
 };
 
 /**
- * @api{get} /api/users Request All User Data
- * @apiName Get Users
- * @apiPermission Admin
- * @apiGroup Admin
- */
+* @api{get} /api/users Request All User Data
+* @apiName Get Users
+* @apiPermission Admin
+* @apiGroup Admin
+* 
+* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
+* @apiHeader (Authorization) {Object} headers.Authorization             This is the Autorization object within the headers
+* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Autorization token recieved and stored upon login 
+*
+* @apiHeaderExample {json} Authorization Header-Example:
+*     {
+*       "headers": "Authorizaton": {
+*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
+*      }
+*    }
+* 
+* @apiSuccessExample Success-Response:
+*     HTTP/1.1 200 OK
+*     [
+*       {
+*         "id": 1,
+*         "username": "omar",
+*         "password": "$2a$10$SQpZI3OokvrWR80bFmrlD.BNVSlqbHDGhZRgqhrWr8bhbHgyBH7Uq",
+*         "role": "admin"
+*       },
+*       {
+*         "id": 2,
+*         "username": "adam",
+*         "password": "$2a$10$BlMZckrdp5QBVSdW/ZfncOyTlBXRGoFjFZ5h9UOm4mfbH2Jbvuvn6",
+*         "role": "user"
+*       },
+*       {
+*         "id": 3,
+*         "username": "victor",
+*         "password": "$2a$10$hVJEKAlxlWAKHaBhDu7W9uxWouxNqO5wJS0tPPM65uYCzSpMgPcpC",
+*         "role": "user"
+*       },
+*       ...
+*     ] 
+*
+* @apiSuccess {Array}   Users                Array of stored User Objects  
+* @apiSuccess {Object}  Users.User           User Object
+* @apiSuccess {Number}  Users.User.id        Users id.
+* @apiSuccess {String}  Users.User.username  Users Username
+* @apiSuccess {String}  Users.User.password  Users hashed and salted password
+* @apiSuccess {String}  Users.User.role      Users Permissions
+*/
 function getUsers(req, res) {
   // implement user registration
     db('users')
@@ -85,10 +127,39 @@ function register(req, res) {
     : res.status(422).json({message:"Please fill out a username & password before submitting"})
 }
 /**
- * @api{post} /api/login Login user
- * @apiName Login User
- * @apiGroup Authentication
- */
+* @api {post} /api/Login Logs User in
+* @apiName User Login
+* @apiGroup Authentication
+* @apiParamExample {json} Input
+*    {
+*       "username": "homer",
+*       "password": "password"
+*     }
+*
+* @apiParam {Object} User               User
+* @apiParam {Number} User.id            user id.
+* @apiParam {String} User.password      Password.
+*
+* @apiSuccessExample Success-Response:
+*     HTTP/1.1 200 OK
+*    {
+*      "message": "Hello homer",
+*      "token": "eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
+*    }
+*
+* @apiSuccess {Object} Response            Response Object
+* @apiSuccess {String} Response.message    Greeting Message to User
+* @apiSuccess {String} Response.token      Authentication token
+*
+*
+* @apiError Submission Failed to submit one or more REQUIRED field
+
+* @apiErrorExample Error-Response:
+*     HTTP/1.1 422 Unprocessable Entity
+*     {
+*       "message":"Please fill out a username & password before submitting"
+*     }
+*/
 function login(req, res) {
   // implement user login
   let { username, password } = req.body;
