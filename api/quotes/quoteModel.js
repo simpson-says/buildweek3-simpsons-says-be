@@ -6,11 +6,11 @@ module.exports = {
 	},
 
 	getQuotes: id => {
-		return db('quotes').where({ id: Number(id) }).select('id', 'quote', 'char');
+		return db('quotes').where({ id: Number(id) }).select('id', 'quote', 'character');
 	},
 
 	getFaves: id => {
-		return db('quotes').where({ quoteID: Number(id) }).select('id', 'quote', 'char');
+		return db('quotes').where({ quoteID: Number(id) }).select('id', 'quote', 'character');
 	},
 
 	addQuote: newQuote => {

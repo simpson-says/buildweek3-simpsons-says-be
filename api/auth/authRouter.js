@@ -1,8 +1,8 @@
-const axios = require('axios');
+// const axios = require('axios');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const db = require('./authenticate');
+const db = require('./authModel');
 const secret = process.env.shh || 'abcd';
 
 require('../auth/authenticate').jwtKey;

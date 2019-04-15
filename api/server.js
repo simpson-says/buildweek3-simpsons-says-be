@@ -7,7 +7,7 @@ server.use(require('express').json());
 require('../api/auth/authRouter')(server);
 
 server.get('/', (req, res) => {
-  res.status(200).json({ message: 'Api is running on port 4000' });
+	res.status(200).json({ message: 'Api is running on port 4000' });
 });
-  
+
 module.exports = server;

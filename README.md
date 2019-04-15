@@ -2,38 +2,19 @@
 
 https://simpson-says.herokuapp.com/
 
-npm run server to start
+'npm run server' to start
 
 #Endpoints
 
-User API has the following endpoints:
-
-* GET to '/register' for retrieving new username and password
-
-    -- accepts username (string) and password (string)
-
-* GET to '/login" for retrieving username and password
-
-    -- gets username (string) and password (string)
-
-* GET to /favorites to get a list of existing favorites
-
-    -- gets array of favorite quotes (strings)
-
-* POST to /favorites to add new favorites to existing list
-
-    -- outputs a favorite quote (string)
-
-* GET to /search to retrieve user search string
-
-    -- takes in user search words (string)
-
-* POST to /generator to display new quote based on character to FE
-
-    -- outputs a quote (string)
-
-
-
+| Endpoint   | Action                                                        | Accepts/Outputs  |
+|------------|---------------------------------------------------------------|------------------|
+| /register  | GET  -retrieves new username and password                     | string / string  |
+| /login     | GET  -retrieves username and password                         | string / string  |
+| /favorites | GET  -retrieves a list of existing favorite quotes            | array of strings |
+|            | POST -adds new favorite quote to existing list                | string           |
+| /search    | GET  -retrieves user search string                            | string           |
+| /generator | GET  -retrieves random quote from database based on character | string           |
+|-----------------------------------------------------------------------------------------------|
 
 
 GET to '/register'
@@ -78,7 +59,7 @@ favoriteQuotes = [
 GET to '/search'
 
 {
-    search: 'This is a search string.'
+    search: 'This is a search string.'  (not needed for BE because DS hooked up to FE)
 }
 
 GET to '/generator'
