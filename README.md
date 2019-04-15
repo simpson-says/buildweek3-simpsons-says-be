@@ -74,7 +74,7 @@ GET to '/search'
     search: 'This is a search string.'
 }
 
-POST to '/generator'
+GET to '/generator'
 
 {
     genQuote: 'This is a randomly generated quote based on the chosen character.'
