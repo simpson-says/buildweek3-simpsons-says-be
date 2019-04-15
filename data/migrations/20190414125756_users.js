@@ -12,6 +12,10 @@ exports.up = function(knex) {
       users
         .string('password')
         .notNullable()
+      users
+        .string('role')
+        .notNullable()
+        .defaultTo("user")
     })
 };
 
