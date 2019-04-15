@@ -14,7 +14,6 @@ https://simpson-says.herokuapp.com/
 |            | POST -adds new favorite quote to existing list                | string           |
 | /search    | GET  -retrieves user search string                            | string           |
 | /generator | GET  -retrieves random quote from database based on character | string           |
-|-----------------------------------------------------------------------------------------------|
 
 
 GET to '/register'
