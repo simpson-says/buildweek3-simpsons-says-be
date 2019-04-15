@@ -27,3 +27,55 @@ User API has the following endpoints:
 * POST to /generator to display new quote based on character to FE
 
     -- outputs a quote (string)
+
+
+GET to '/register'
+
+{
+    userName: 'string',
+    password: 'string'
+}
+
+GET to '/login'
+
+{
+    userName: 'string',
+    password: 'string
+}
+
+GET to '/favorites'
+
+favoriteQuotes = [
+    {
+        id: 1,
+        quote: 'This is a quote.'
+        char: 'Character Name'
+    }
+    {
+        id: 2,
+        quote: 'This is a quote.'
+        char: 'Character Name'
+    }
+];
+
+POST to '/favorites'
+
+favoriteQuotes = [
+    {
+        id: 8,
+        quote: 'This is a quote.',
+        char: 'Character Name'
+    }
+];
+
+GET to '/search'
+
+{
+    search: 'This is a search string.'
+}
+
+POST to '/generator'
+
+{
+    genQuote: 'This is a randomly generated quote based on the chosen character.'
+}
