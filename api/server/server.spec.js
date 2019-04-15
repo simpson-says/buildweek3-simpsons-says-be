@@ -25,7 +25,7 @@ describe('Server.js', () => {
               .then(res => {
                 expect(res.type).toBe('text/html');
               });
-          });
+        });
     
     });
 });

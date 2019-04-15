@@ -11,11 +11,61 @@ describe('Authentication Router Tests', () => {
     });
 
     describe('/api/register POST', () => {
-        it('should respond with status code 200', () => {
-            return request(server)
-                .post('/api/register')
-                .send({ username: "George", password:"thisWouldBeHashed" })
-                .expect(200);
+        describe('Successful Register', () => {
+            
+            it('should respond with status code 200', () => {
+                return request(server)
+                    .post('/api/register')
+                    .send({ username: "George", password:"thisWouldBeHashed" })
+                    .expect(200);
+            });
+    
+            it("successfully adds a new user to the db", async () => {
+                await request(server)
+                  .post("/api/register")
+                  .send({ username: "Lincoln", password: "password" });
+                let users = await db("users").where({ username: "Lincoln" });
+                expect(users.length).toBe(1);
+          
+                await request(server)
+                  .post("/api/register")
+                  .send({ username: "Reagan", password: "america" });
+                users = await db("users");
+                expect(users).toHaveLength(2);
+              });
         });
     });
+
+    describe('/api/login POST', () => {
+        describe('Successful login', () => {
+            
+            it('should respond with status code 200', async () => {
+                await request(server)
+                        .post('/api/register')
+                        .send({ username: "George", password:"thisWouldBeHashed" })
+                        .expect(200);
+                    
+                return request(server)
+                        .post('/api/login')
+                        .send({ username: "George", password:"thisWouldBeHashed" })
+                        .expect(200);
+                        
+            });
+    
+            // it("successfully adds a new user to the db", async () => {
+            //     await request(server)
+            //       .post("/api/login")
+            //       .send({ username: "Lincoln", password: "password" });
+            //     let users = await db("users").where({ username: "Lincoln" });
+            //     expect(users.length).toBe(1);
+          
+            //     await request(server)
+            //       .post("/api/login")
+            //       .send({ username: "Reagan", password: "america" });
+            //     users = await db("users");
+            //     expect(users).toHaveLength(2);
+            //   });
+        });
+    });
+
 });
