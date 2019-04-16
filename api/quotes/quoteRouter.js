@@ -15,12 +15,12 @@ router.get('/favorites', async (req, res) => {
 // POST - new favorite quote to existing list
 router.post('/favorites', async (req, res) => {
 	const newFaveQuote = req.body;
-	if (!newFaveQuote.quotes || !newFaveQuote.char) {
+	if (!newFaveQuote.quote || !newFaveQuote.char) {
 		res.status(400).json({ errorMessage: 'Quote and character require to add to favorites.' });
 	} else {
 		try {
-			const newFaveQuote = await db.addQuote(newFaveQuote);
-			res.status(201).json(newFaveQuote);
+			const newQuote = await db.addQuote(newFaveQuote);
+			res.status(201).json(newQuote);
 		} catch (error) {
 			res.status(500).json({ errorMessage: 'Could not save quote to database.' });
 		}

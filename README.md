@@ -17,6 +17,22 @@ https://simpson-says.herokuapp.com/
 | /generator | GET  -retrieves random quote from database based on character | string           |
 
 
+/register - adds new user 
+       - user, password, ID
+       - string, string, 2
+/login - let's existing user login
+    user, password
+    - string, string
+/favorites - gets list of existing favorites
+         - JSON array
+/addFavorite - adds a new favorite to the existing list of favorites
+             - string
+             - ID
+/search - gets user generated search
+        - string
+/generator - generates new quote based on chosen character
+           - string
+
 GET to '/register'
 
 {
