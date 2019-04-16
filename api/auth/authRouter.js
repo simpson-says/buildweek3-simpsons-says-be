@@ -1,4 +1,4 @@
-// const axios = require('axios');
+const axios = require('axios');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -9,11 +9,11 @@ require('../auth/authenticate').jwtKey;
 const { authenticate } = require('../auth/authenticate');
 
 module.exports = server => {
-	server.post('/api/register', register);
-	server.post('/api/login', login);
+	server.post('api/register', register);
+	server.post('api/login', login);
 };
 
-register = (req, res) => {
+function register(req, res) {
 	const user = req.body;
 	const hash = bcrypt.hashSync(user.password, 8);
 	user.password = hash;
@@ -32,7 +32,7 @@ register = (req, res) => {
 	}
 };
 
-login = (req, res) => {
+function login(req, res) {
 	const { username, password } = req.body;
 
 	if (username && password) {
@@ -55,7 +55,7 @@ login = (req, res) => {
 	}
 };
 
-generateToken = user => {
+function generateToken (user) {
 	const payload = {
 		subject: user.id,
 		username: user.username
