@@ -27,16 +27,25 @@ router.post('/favorites', async (req, res) => {
 	}
 });
 
-// GET generated quote based on chosen character
-router.get('/generator', async (req, res) => {
+// GET - '/search'
+router.get('/search', async (req, res) => {
 	try {
-		const genQuote = await db.getGenQuote();
-		res.status(200).json(genQuote);
+		const search = await db.getSearch();
+		res.status(200).json(search);
 	} catch (error) {
-		res.status(500).json({ errorMessage: 'Cannot retrieve quote.' });
+		res.status(500).json({ errorMessage: 'Cannot retrieve search param.' });
 	}
 });
 
-// '/search' will go directly to FE
+
+// // GET generated quote based on chosen character - STRETCH
+// router.get('/generator', async (req, res) => {
+// 	try {
+// 		const genQuote = await db.getGenQuote();
+// 		res.status(200).json(genQuote);
+// 	} catch (error) {
+// 		res.status(500).json({ errorMessage: 'Cannot retrieve quote.' });
+// 	}
+// });
 
 module.exports = router;

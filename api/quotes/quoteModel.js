@@ -10,13 +10,9 @@ module.exports = {
 	addQuote: newQuote => {
 		return db('quotes').insert(quote);
 	},
-
-	// get generated quote based on chosen character
-	getGenQuote: id => {
-		return db('quotes');
-	},
+	// get search from user
+	getSearch: newSearch => {
+		return db('search');
+	}
 
 };
-
-
-// '/search' will go directly between FE and DS
