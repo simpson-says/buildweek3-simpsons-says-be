@@ -1,19 +1,24 @@
 const db = require('../data/dbConfig');
 
 module.exports = {
-	getQuotes: () => {
+	// get list of favorite quotes
+	getFavorites: () => {
 		return db('quotes');
 	},
 
-	getQuotes: id => {
-		return db('quotes').where({ id: Number(id) }).select('id', 'quote', 'character');
+	// add new quote to favorites
+	addQuote: newQuote => {
+		return db('quotes').insert(quote);
 	},
 
-	getFaves: id => {
+	// get generated quote based on chosen character
+	getGenQuote: id => {
 		return db('quotes').where({ quoteID: Number(id) }).select('id', 'quote', 'character');
 	},
 
-	addQuote: newQuote => {
-		return db('quotes').insert(quote);
-	}
 };
+
+
+// getQuotes: id => {
+// 	return db('quotes').where({ id: Number(id) }).select('id', 'quote', 'character');
+// },

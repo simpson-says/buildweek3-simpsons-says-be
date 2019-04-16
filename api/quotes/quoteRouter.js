@@ -5,7 +5,7 @@ const db = require('./quoteModel');
 // GET - existing list of favorite quotes
 router.get('/favorites', async (req, res) => {
 	try {
-		const favorites = await db.get_faves();
+		const favorites = await db.getFavorites();
 		res.status(200).json(quotes);
 	} catch (error) {
 		res.status(500).json({ errorMessage: 'Cannot retrieve favorites.' });
@@ -30,11 +30,11 @@ router.post('/favorites', async (req, res) => {
 // GET generated quote based on chosen character
 router.get('/generator', async (req, res) => {
 	try {
-		const genQuote = await db.favorites();
+		const genQuote = await db.getGenQuote();
 		res.status(200).json(genQuote);
 	} catch (error) {
 		res.status(500).json({ errorMessage: 'Cannot retrieve quote.' });
 	}
 });
 
-// /search will go directly to FE
+// '/search' will go directly to FE
