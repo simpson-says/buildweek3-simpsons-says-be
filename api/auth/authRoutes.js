@@ -74,6 +74,7 @@ function getUsers(req, res) {
       .then(users => res.status(200).json(users))
       .catch(err => res.status(500).json({message:err}))
 }
+
 /**
 * @api {post} /api/register Registers New User
 * @apiName Register User
