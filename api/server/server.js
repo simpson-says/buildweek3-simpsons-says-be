@@ -6,6 +6,7 @@ server.use(require('express').json());
 
 require('../auth/authRoutes')(server);
 require('../routes/admin/adminRouter')(server);
+require('../routes/doc/doc')(server);
 
 server.get('/', (req, res) => {
     // Sanity Check
