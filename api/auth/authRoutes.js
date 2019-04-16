@@ -76,14 +76,24 @@ function getUsers(req, res) {
 }
 
 /**
-* @api {post} /api/register Registers New User
+* @api {post} /api/register Register New User
 * @apiName Register User
 * @apiGroup Authentication
+*
 * @apiParamExample {json} Input
 *    {
 *      "username": "doe",
-*      "role": "user"
-*    }.
+*      "password": "thisIsHashedAndSalted",
+*    }
+*
+*   | or |
+*
+*    {
+*      "username": "doe",
+*      "password": "thisIsHashedAndSalted",
+*      "role": "Lead Dev",
+*    }
+*    
 *
 * @apiParam {object} newUser New User
 * @apiParam {number} newUser.id  New user id.
@@ -95,7 +105,6 @@ function getUsers(req, res) {
 *     {
 *       "id": 1,
 *       "username": "doe",
-*       "password": "password"
 *       "role": "user"
 *     }
 *
@@ -139,9 +148,13 @@ function register(req, res) {
 }
 
 /**
-* @api {post} /api/Login Logs User in
+* @api {post} /api/Login User Login
 * @apiName User Login
 * @apiGroup Authentication
+*
+* @apiPermission admin
+*
+
 * @apiParamExample {json} Input 
 *    {
 *       "username": "homer",
@@ -164,7 +177,7 @@ function register(req, res) {
 * @apiSuccess {String} Response.token      Authentication token
 *
 *
-* @apiError Submission Failed to submit one or more REQUIRED field
+* @apiError 422 Failed to submit one or more REQUIRED field
 *
 * @apiErrorExample Error-Response:
 *     HTTP/1.1 422 Unprocessable Entity

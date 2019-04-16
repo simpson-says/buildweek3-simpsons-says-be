@@ -1,5 +1,5 @@
-const { authenticate, validateRole } = require('../auth/authenticate');
-const db = require('../../data/dbConfig')
+const { authenticate, validateRole } = require('../../auth/authenticate');
+const db = require('../../../data/dbConfig')
 
 
 module.exports = server => {
@@ -13,6 +13,8 @@ module.exports = server => {
 * @apiGroup Admin
 * @apiDescription This endpoint is restricted to members with admin permissions and directly modifies the user row in the database.
 *       This can be used to grant additional permissions needed or update user details.
+*
+* @apiPermission admin
 *
 * @apiHeader (Authorization) {Object} headers                           This is the Request headers 
 * @apiHeader (Authorization) {Object} headers.Authorization             This is the Authorization object within the headers
@@ -80,6 +82,7 @@ function update(req, res) {
 * @apiName Delete-User
 * @apiGroup Admin
 * @apiDescription This endpoint is restricted to members with admin permissions and deletes the user row in the database.
+* @apiPermission admin
 *
 * @apiHeader (Authorization) {Object} headers                           This is the Request headers 
 * @apiHeader (Authorization) {Object} headers.Authorization             This is the Autorization object within the headers

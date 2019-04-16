@@ -6,6 +6,11 @@
     "name": "Delete_User",
     "group": "Admin",
     "description": "<p>This endpoint is restricted to members with admin permissions and deletes the user row in the database.</p>",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
     "header": {
       "fields": {
         "Authorization": [
@@ -87,7 +92,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "./api/routes/usersRoute.js",
+    "filename": "./api/routes/admin/adminRouter.js",
     "groupTitle": "Admin"
   },
   {
@@ -221,6 +226,11 @@
     "name": "Update_User",
     "group": "Admin",
     "description": "<p>This endpoint is restricted to members with admin permissions and directly modifies the user row in the database. This can be used to grant additional permissions needed or update user details.</p>",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
     "header": {
       "fields": {
         "Authorization": [
@@ -336,20 +346,20 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "./api/routes/usersRoute.js",
+    "filename": "./api/routes/admin/adminRouter.js",
     "groupTitle": "Admin"
   },
   {
     "type": "post",
     "url": "/api/register",
-    "title": "Registers New User",
+    "title": "Register New User",
     "name": "Register_User",
     "group": "Authentication",
     "parameter": {
       "examples": [
         {
           "title": "Input",
-          "content": "{\n  \"username\": \"doe\",\n  \"role\": \"user\"\n}.",
+          "content": " {\n   \"username\": \"doe\",\n   \"password\": \"thisIsHashedAndSalted\",\n }\n\n| or |\n\n {\n   \"username\": \"doe\",\n   \"password\": \"thisIsHashedAndSalted\",\n   \"role\": \"Lead Dev\",\n }",
           "type": "json"
         }
       ],
@@ -391,7 +401,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"username\": \"doe\",\n  \"password\": \"password\"\n  \"role\": \"user\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"username\": \"doe\",\n  \"role\": \"user\"\n}",
           "type": "json"
         }
       ],
@@ -454,9 +464,14 @@
   {
     "type": "post",
     "url": "/api/Login",
-    "title": "Logs User in",
+    "title": "User Login",
     "name": "User_Login",
     "group": "Authentication",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
     "parameter": {
       "examples": [
         {
@@ -531,7 +546,7 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "Submission",
+            "field": "422",
             "description": "<p>Failed to submit one or more REQUIRED field</p>"
           }
         ]

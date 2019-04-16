@@ -7,7 +7,7 @@ describe('Authentication Router Tests', () => {
         await db('users').truncate();
     });
     afterEach(async () => {
-        await db('users').truncate();5
+        await db('users').truncate();
     });
 
     describe('/api/register POST', () => {

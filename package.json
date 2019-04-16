@@ -30,6 +30,8 @@
 	},
 	"dependencies": {
 		"apidoc": "^0.17.7",
+		"apidoc-markdown": "^0.2.1",
+		"apidocjs-markdown": "^0.2.2",
 		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
 		"dotenv": "^7.0.0",
