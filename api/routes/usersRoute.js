@@ -6,10 +6,11 @@ module.exports = server => {
   server.post('/api/users/:id', authenticate, update);
 };
 
-function update(changes, req, res) {
+function update(req, res) {
+    const changes = req.body
     return db('users')
-      .where({id:req.params.id})
+      .where({id : req.params.id})
       .update(changes)
-      .then(updatedUser => res.status(200).json(updatedUser))
+      .then(updateFlag => res.status(200).json({updated: Boolean(updateFlag)}))
 }
   
