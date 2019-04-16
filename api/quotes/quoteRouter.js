@@ -28,8 +28,7 @@ router.post('/favorites', async (req, res) => {
 });
 
 // GET generated quote based on chosen character
-router.get('/favorites', async (req, res) => {
-	// if favor
+router.get('/generator', async (req, res) => {
 	try {
 		const genQuote = await db.favorites();
 		res.status(200).json(genQuote);
