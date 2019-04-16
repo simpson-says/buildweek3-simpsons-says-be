@@ -1,8 +1,8 @@
 exports.up = function(knex) {
-	return knex.schema.createTable('quotes', function(users) {
+	return knex.schema.createTable('quots', function(users) {
 		users.increments();
 		quotes.string('char');
-		quotes.string('quote');
+		quotes.string('quotes');
 	});
 };
 

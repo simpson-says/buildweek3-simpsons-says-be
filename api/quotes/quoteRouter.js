@@ -15,7 +15,7 @@ router.get('/favorites', async (req, res) => {
 // POST - new favorite quote to existing list
 router.post('/favorites', async (req, res) => {
 	const newFaveQuote = req.body;
-	if (!newFaveQuote.quote || !newFaveQuote.char) {
+	if (!newFaveQuote.quotes || !newFaveQuote.char) {
 		res.status(400).json({ errorMessage: 'Quote and character require to add to favorites.' });
 	} else {
 		try {

@@ -16,14 +16,14 @@ router.post("/login", login);
 
 function register(req, res) {
 	const user = req.body;
-	const hash = bcrypt.hashSync(user.password, 8);
-	user.password = hash;
+	const hash = bcrypt.hashSync(user.pw, 8);
+	user.pw = hash;
 
-	if (user.username && user.password) {
+	if (user.username && user.pw) {
 		db
 			.addUser(user)
 			.then(user => {
-				res.status(201).json(user);
+				res.status(201).json({ message: 'User added.', user });
 			})
 			.catch(err => {
 				res.status(500).json({ message: 'Could not add user.' });
