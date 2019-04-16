@@ -38,3 +38,5 @@ router.get('/generator', async (req, res) => {
 });
 
 // '/search' will go directly to FE
+
+module.exports = router;

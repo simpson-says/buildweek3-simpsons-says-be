@@ -8,10 +8,11 @@ const secret = process.env.shh || 'abcd';
 require('../auth/authenticate').jwtKey;
 const { authenticate } = require('../auth/authenticate');
 
-module.exports = server => {
-	server.post('api/register', register);
-	server.post('api/login', login);
-};
+const express = require('express');
+const router = express.Router();
+
+router.post("/register", register);
+router.post("/login", login);
 
 function register(req, res) {
 	const user = req.body;
@@ -65,3 +66,5 @@ function generateToken (user) {
 	};
 	return jwt.sign(payload, secret, options);
 };
+
+module.exports = router;
