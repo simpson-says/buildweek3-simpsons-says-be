@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const db = require('./authModel');
+// const db = require('./authModel');
 const secret = process.env.shh || 'abcd';
 
 require('../auth/authenticate').jwtKey;
