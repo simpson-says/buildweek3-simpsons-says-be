@@ -1,4 +1,12 @@
 {
+  "title": "Simpson Says Docs",
+  "url": "https://simpson-says-backend.herokuapp.com/",
+  "order": [
+    "Authentication",
+    "Users",
+    "Admin",
+    "PostError"
+  ],
   "name": "simpsonsays",
   "version": "1.0.0",
   "description": "Simpson Search Algorithm",
@@ -7,7 +15,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-04-16T20:10:06.608Z",
+    "time": "2019-04-17T06:21:42.033Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }

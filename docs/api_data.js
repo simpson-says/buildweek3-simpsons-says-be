@@ -26,14 +26,14 @@ define({ "api": [
             "type": "Object",
             "optional": false,
             "field": "headers.Authorization",
-            "description": "<p>This is the Autorization object within the headers</p>"
+            "description": "<p>This is the Authorization object within the headers</p>"
           },
           {
             "group": "Authorization",
             "type": "String",
             "optional": false,
             "field": "headers.Authorization.token",
-            "description": "<p>This is the Autorization token recieved and stored upon login</p>"
+            "description": "<p>This is the Authorization token recieved and stored upon login</p>"
           }
         ]
       },
@@ -92,7 +92,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./api/routes/admin/adminRouter.js",
+    "filename": "./api/routes/admin/adminRoutes.js",
     "groupTitle": "Admin"
   },
   {
@@ -346,7 +346,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./api/routes/admin/adminRouter.js",
+    "filename": "./api/routes/admin/adminRoutes.js",
     "groupTitle": "Admin"
   },
   {
@@ -590,5 +590,163 @@ define({ "api": [
     "group": "C__Users_elper_Desktop_work_Project_III_simpsonsays_docs_main_js",
     "groupTitle": "C__Users_elper_Desktop_work_Project_III_simpsonsays_docs_main_js",
     "name": ""
+  },
+  {
+    "type": "post",
+    "url": "/api/Users/favorites",
+    "title": "Add a new User favorite",
+    "name": "Post_Favorites",
+    "group": "Users",
+    "description": "<p>This endpoint is open to all users to add a favorite quote to our DB for querying.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "header": {
+      "fields": {
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers",
+            "description": "<p>This is the Request headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers.Authorization",
+            "description": "<p>This is the Authorization object within the headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "headers.Authorization.token",
+            "description": "<p>This is the Authorizations token recieved and stored upon login</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Authorization Header-Example:",
+          "content": " {\n   \"headers\": \"Authorizaton\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n[\n\n]",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Response Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Response.updated",
+            "description": "<p>Boolean Value Indicating successful User Update</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "500",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to delete User.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "post",
+    "url": "/api/Users/favorites",
+    "title": "Add a new User favorite",
+    "name": "Post_Favorites",
+    "group": "Users",
+    "description": "<p>This endpoint is open to all users to add a favorite quote to our DB for querying.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n  \"Favorite-Added\": true,\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Response Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Response.Favorite",
+            "description": "<p>Boolean Value Indicating successful User Update</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "500",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to delete User.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
   }
 ] });

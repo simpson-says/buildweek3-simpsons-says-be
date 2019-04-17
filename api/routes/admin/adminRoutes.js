@@ -85,8 +85,8 @@ function update(req, res) {
 * @apiPermission admin
 *
 * @apiHeader (Authorization) {Object} headers                           This is the Request headers 
-* @apiHeader (Authorization) {Object} headers.Authorization             This is the Autorization object within the headers
-* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Autorization token recieved and stored upon login 
+* @apiHeader (Authorization) {Object} headers.Authorization             This is the Authorization object within the headers
+* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Authorization token recieved and stored upon login 
 *
 * @apiHeaderExample {json} Authorization Header-Example:
 *     {
