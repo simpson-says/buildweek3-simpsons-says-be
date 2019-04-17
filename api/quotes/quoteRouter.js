@@ -14,8 +14,7 @@ string
 / STRETCH generator - generates new quote based on chosen character - string*/
 
 // /favorites - gets existing favorites
-router.get('/favorites/:id', async (req, res) => { 
-	const { id } = req.params;
+router.get('/favorites', async (req, res) => { 
 	try {
 		// const favorites = await db.getFavorites(); // gets favorites existing in db
 		// res.status(200).json(quotes); // OK status
@@ -29,7 +28,8 @@ router.get('/favorites/:id', async (req, res) => {
 });
 
 // /addFavorite - adds a new favorite to the existing list of favorites - string - ID 
-router.post('/addFavorite', async (req, res) => {
+router.post('/favorites/:id', async (req, res) => {
+	const { id } = req.params;
 	const newFaveQuote = req.body; // var set to all favorites
 	if (!newFaveQuote.quote || !newFaveQuote.char) {  // if missing quote or character portion of entry
 		res.status(400).json({ errorMessage: 'Quote and character require to add to favorites.' });
@@ -46,9 +46,9 @@ router.post('/addFavorite', async (req, res) => {
 //search - gets user generated search - string
 router.get('/search', async (req, res) => {
 	try {
-		const search = await db.getSearch(); // searches database
+		// const search = await db.getSearch(); // searches database
 		res.status(200).json(search); // OK status
-		axios.post('https://simpsonssays.herokuapp.com/api')
+		axios.post(`https://simpsonssays.herokuapp.com/api?quote=${searchString}`)
 	} catch (error) { // catch all error
 		res.status(500).json({ errorMessage: 'Cannot retrieve search param.' }); // error
 	}
