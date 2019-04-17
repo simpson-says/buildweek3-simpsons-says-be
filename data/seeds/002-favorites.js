@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex('favorites').insert([
-        {userID: 1, quoteID: 1},
+        {userID: 1, quoteID: 5},
         {userID: 1, quoteID: 13},
         {userID: 1, quoteID: 11},
 
@@ -13,7 +13,7 @@ exports.seed = function(knex, Promise) {
         {userID: 2, quoteID: 23},
         {userID: 2, quoteID: 11},
 
-        {userID: 1, quoteID: 1},
+        {userID: 1, quoteID: 6},
         {userID: 1, quoteID: 13},
         {userID: 1, quoteID: 23},
       ]);
