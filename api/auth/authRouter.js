@@ -14,6 +14,13 @@ const router = express.Router();
 router.post("/register", register);
 router.post("/login", login);
 
+/*register - adds new user - user, 
+password, ID - string, string, 2 
+
+/login - let's existing user login user, 
+password - string, string  */
+
+
 function register(req, res) {
 	const user = req.body;
 	const hash = bcrypt.hashSync(user.pw, 8);
