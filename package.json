@@ -6,7 +6,8 @@
 	"scripts": {
 		"server": "nodemon index.js DB_ENV=development",
 		"test": "cross-env DB_ENV=testing && yarn knex migrate:latest && jest --watchAll --verbose",
-		"start": "node index.js"
+		"start": "node index.js",
+		"reset-dev-DB": "yarn knex migrate:rollback && yarn knex migrate:latest && yarn knex seed:run"
 	},
 	"jest": {
 		"testEnvironment": "node"
@@ -32,6 +33,7 @@
 		"apidoc": "^0.17.7",
 		"apidoc-markdown": "^0.2.1",
 		"apidocjs-markdown": "^0.2.2",
+		"axios": "^0.18.0",
 		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
 		"dotenv": "^7.0.0",

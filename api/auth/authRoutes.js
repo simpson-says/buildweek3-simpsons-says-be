@@ -197,8 +197,10 @@ function login(req, res) {
       .then(user => {
         // JWT config data
         const payload = {
-          subject: user.username,
-          role:user.role
+          subject: "User-Data",
+          username: user.username,
+          id: user.id,
+          role: user.role
         }
         const options = {
           expiresIn: '365d'

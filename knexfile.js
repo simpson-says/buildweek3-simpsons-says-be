@@ -11,7 +11,6 @@ const productionDbConnection = process.env.DATABASE_URL || localPg;
 module.exports = {
   development: {
     useNullAsDefault: true,
-    
     client: 'sqlite3',
     connection: {
       filename: './data/developmentDB.db3',
