@@ -30,8 +30,8 @@ router.post('/addFavorites', authenticate, async (req, res) => {
 		res.status(400).json({ errorMessage: 'Quote and character require to add to favorites.' });
 	} else {
 		try {
-			const newQuote = await db.addQuote(newFaveQuote); // add new quote to db
-			res.status(201).json(newQuote); // OK status, quote added
+			const newFavorite = await db.addFavorite(newFaveQuote); // add new quote to db
+			res.status(201).json(newFavorite); // OK status, quote added
 		} catch (error) {
 			res.status(500).json({ errorMessage: 'Could not save quote to database.' }); // error could not save quote
 		}

@@ -11,6 +11,15 @@ exports.up = function(knex) {
       quotes
         .string('quote')
         .notNullable()
+
+      quotes
+        .integer('user_id')
+        .unsigned()
+        .references('id')
+        .inTable('users')
+        .notNullable();
+ 
+     tbl.timestamps(true, true);
     })
 };
 
