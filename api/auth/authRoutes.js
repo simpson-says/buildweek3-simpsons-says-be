@@ -18,17 +18,6 @@ module.exports = server => {
 *
 * @apiGroup Admin
 * 
-* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
-* @apiHeader (Authorization) {Object} headers.Authorization             This is the Autorization object within the headers
-* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Autorization token recieved and stored upon login 
-*
-* @apiHeaderExample {json} Authorization Header-Example:
-*     {
-*       "headers": "Authorizaton": {
-*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
-*      }
-*    }
-* 
 * @apiSuccessExample Success-Response:
 *     HTTP/1.1 200 OK
 *     [
@@ -151,10 +140,13 @@ function register(req, res) {
 * @api {post} /api/Login User Login
 * @apiName User Login
 * @apiGroup Authentication
+* @apiDescription This end point will log users in by creating a limited timed access token. 
+*   This token will need to be stored and sent in ALL requests made to the server, and will 
+*   include your role based permissions for end point access. See the below example for reference.
 *
 * @apiPermission admin
 *
-
+*
 * @apiParamExample {json} Input 
 *    {
 *       "username": "homer",
@@ -184,6 +176,18 @@ function register(req, res) {
 *     {
 *       "message":"Please fill out a username & password before submitting"
 *     }
+*
+* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
+* @apiHeader (Authorization) {Object} headers.Authorization             This is the Autorization object within the headers
+* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Autorization token recieved and stored upon login 
+*
+* @apiHeaderExample {json} Authorization Header-Example:
+*     {
+*       "headers": "Authorization": {
+*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
+*      }
+*    }
+* 
 */
 
 function login(req, res) {

@@ -8,43 +8,9 @@
     "description": "<p>This endpoint is restricted to members with admin permissions and deletes the user row in the database.</p>",
     "permission": [
       {
-        "name": "admin"
+        "name": "Admin"
       }
     ],
-    "header": {
-      "fields": {
-        "Authorization": [
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers",
-            "description": "<p>This is the Request headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers.Authorization",
-            "description": "<p>This is the Authorization object within the headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "String",
-            "optional": false,
-            "field": "headers.Authorization.token",
-            "description": "<p>This is the Authorization token recieved and stored upon login</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Authorization Header-Example:",
-          "content": " {\n   \"headers\": \"Authorizaton\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "success": {
       "examples": [
         {
@@ -107,40 +73,6 @@
       }
     ],
     "group": "Admin",
-    "header": {
-      "fields": {
-        "Authorization": [
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers",
-            "description": "<p>This is the Request headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers.Authorization",
-            "description": "<p>This is the Autorization object within the headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "String",
-            "optional": false,
-            "field": "headers.Authorization.token",
-            "description": "<p>This is the Autorization token recieved and stored upon login</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Authorization Header-Example:",
-          "content": " {\n   \"headers\": \"Authorizaton\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "success": {
       "examples": [
         {
@@ -228,43 +160,9 @@
     "description": "<p>This endpoint is restricted to members with admin permissions and directly modifies the user row in the database. This can be used to grant additional permissions needed or update user details.</p>",
     "permission": [
       {
-        "name": "admin"
+        "name": "Admin"
       }
     ],
-    "header": {
-      "fields": {
-        "Authorization": [
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers",
-            "description": "<p>This is the Request headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers.Authorization",
-            "description": "<p>This is the Authorization object within the headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "String",
-            "optional": false,
-            "field": "headers.Authorization.token",
-            "description": "<p>This is the Authorization token recieved and stored upon login</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Authorization Header-Example:",
-          "content": " {\n   \"headers\": \"Authorization\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "parameter": {
       "examples": [
         {
@@ -467,6 +365,7 @@
     "title": "User Login",
     "name": "User_Login",
     "group": "Authentication",
+    "description": "<p>This end point will log users in by creating a limited timed access token. This token will need to be stored and sent in ALL requests made to the server, and will include your role based permissions for end point access. See the below example for reference.</p>",
     "permission": [
       {
         "name": "admin"
@@ -559,6 +458,40 @@
         }
       ]
     },
+    "header": {
+      "fields": {
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers",
+            "description": "<p>This is the Request headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers.Authorization",
+            "description": "<p>This is the Autorization object within the headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "headers.Authorization.token",
+            "description": "<p>This is the Autorization token recieved and stored upon login</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Authorization Header-Example:",
+          "content": " {\n   \"headers\": \"Authorization\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
     "filename": "./api/auth/authRoutes.js",
     "groupTitle": "Authentication"
@@ -592,56 +525,22 @@
     "name": ""
   },
   {
-    "type": "post",
-    "url": "/api/Users/favorites",
-    "title": "Add a new User favorite",
-    "name": "Post_Favorites",
-    "group": "Users",
-    "description": "<p>This endpoint is open to all users to add a favorite quote to our DB for querying.</p>",
+    "type": "get",
+    "url": "/api/users/favorites",
+    "title": "Get All User favorites",
+    "name": "Get_Favorites",
+    "description": "<p>This Endpoint is used by all users to retrieve list of favorite quotes.</p>",
     "permission": [
       {
         "name": "Users"
       }
     ],
-    "header": {
-      "fields": {
-        "Authorization": [
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers",
-            "description": "<p>This is the Request headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "Object",
-            "optional": false,
-            "field": "headers.Authorization",
-            "description": "<p>This is the Authorization object within the headers</p>"
-          },
-          {
-            "group": "Authorization",
-            "type": "String",
-            "optional": false,
-            "field": "headers.Authorization.token",
-            "description": "<p>This is the Authorizations token recieved and stored upon login</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Authorization Header-Example:",
-          "content": " {\n   \"headers\": \"Authorizaton\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
+    "group": "Users",
     "success": {
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n[\n\n]",
+          "content": "HTTP/1.1 200 OK\n[\n  \n]",
           "type": "json"
         }
       ],
@@ -649,17 +548,10 @@
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "Object",
+            "type": "Array",
             "optional": false,
-            "field": "Response",
-            "description": "<p>Response Object</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "Response.updated",
-            "description": "<p>Boolean Value Indicating successful User Update</p>"
+            "field": "Qoutes",
+            "description": "<p>Array of favorite Quotes</p>"
           }
         ]
       }
@@ -671,14 +563,14 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "500",
-            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+            "description": "<p>Error Sending out Favorites list for query</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to delete User.\"\n}",
+          "content": "HTTP/1.1 500 Bad Request\n{\n  \"message\": \"Error Sending out Favorites list for query\"\n}",
           "type": "json"
         }
       ]
@@ -690,7 +582,7 @@
   {
     "type": "post",
     "url": "/api/Users/favorites",
-    "title": "Add a new User favorite",
+    "title": "Add User Favorite",
     "name": "Post_Favorites",
     "group": "Users",
     "description": "<p>This endpoint is open to all users to add a favorite quote to our DB for querying.</p>",
@@ -699,14 +591,34 @@
         "name": "Users"
       }
     ],
-    "success": {
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Quote",
+            "description": "<p>Request Object</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "Quote.quoteID",
+            "description": "<p>ID number of the quote to Favorite</p>"
+          }
+        ]
+      },
       "examples": [
         {
-          "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n  \"Favorite-Added\": true,\n}",
+          "title": "Input ",
+          "content": "{\n  \"quoteID\": 15\n}",
           "type": "json"
         }
-      ],
+      ]
+    },
+    "success": {
       "fields": {
         "Success 200": [
           {
@@ -724,7 +636,14 @@
             "description": "<p>Boolean Value Indicating successful User Update</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n  \"Favorite-Added\": true,\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -740,7 +659,7 @@
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to delete User.\"\n}",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to add favorite for User.\"\n}",
           "type": "json"
         }
       ]

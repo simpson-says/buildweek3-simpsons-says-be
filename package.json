@@ -44,7 +44,7 @@
 	},
 	"apidoc": { 
 		"title": "Simpson Says Docs",
-		"url" : "https://simpson-says-backend.herokuapp.com/",
+		"url" : "https://simpson-says-backend.herokuapp.com",
 		"order": [
 			"Authentication",
 			"Users",

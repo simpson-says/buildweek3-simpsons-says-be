@@ -1,6 +1,6 @@
 define({
   "title": "Simpson Says Docs",
-  "url": "https://simpson-says-backend.herokuapp.com/",
+  "url": "https://simpson-says-backend.herokuapp.com",
   "order": [
     "Authentication",
     "Users",
@@ -15,7 +15,7 @@ define({
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-04-17T06:21:42.033Z",
+    "time": "2019-04-17T07:14:18.728Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }

@@ -8,43 +8,7 @@ module.exports = server => {
     server.get('/users/favorites', authenticate, getFavorites);
   };
 
-/**
-* @api {post} /api/Users/favorites  Add a new User favorite
-* @apiName Post-Favorites
-* @apiGroup Users
-* @apiDescription This endpoint is open to all users to add a favorite quote to our DB for querying.
-* @apiPermission Users
-*
-* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
-* @apiHeader (Authorization) {Object} headers.Authorization             This is the Authorization object within the headers
-* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Authorizations token recieved and stored upon login 
-*
-* @apiHeaderExample {json} Authorization Header-Example:
-*     {
-*       "headers": "Authorizaton": {
-*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
-*      }
-*    }
-*  
-*
-* @apiSuccessExample Success-Response:
-*     HTTP/1.1 200 OK
-*    [
-*
-*    ]
-*
-* @apiSuccess {Object} Response             Response Object
-* @apiSuccess {Boolean} Response.updated    Boolean Value Indicating successful User Update
-*
-*
-* @apiError 500 Failed to submit one or more REQUIRED field
-*
-* @apiErrorExample Error-Response:
-*     HTTP/1.1 500 Internal Server Error
-*     {
-*        message: "Internal Server Error, failed to delete User."
-*     }
-*/
+
 function searchDeepBE(req, res) {
     const searchString = req.body.searchValue
     
@@ -58,13 +22,23 @@ function searchDeepBE(req, res) {
 }
 
 /**
-* @api {post} /api/Users/favorites  Add a new User favorite
+* @api {post} /api/Users/favorites Add User Favorite
 * @apiName Post-Favorites
 * @apiGroup Users
 * @apiDescription This endpoint is open to all users to add a favorite quote to our DB for querying.
 * @apiPermission Users
 *
-*  
+* @apiParam {Object} Quote             Request Object
+* @apiParam {Number} Quote.quoteID     ID number of the quote to Favorite
+* 
+* @apiParamExample {json} Input 
+*     {
+*       "quoteID": 15
+*     }
+*
+* 
+* @apiSuccess {Object}  Response             Response Object
+* @apiSuccess {Boolean} Response.Favorite    Boolean Value Indicating successful User Update
 *
 * @apiSuccessExample Success-Response:
 *     HTTP/1.1 200 OK
@@ -72,8 +46,6 @@ function searchDeepBE(req, res) {
 *      "Favorite-Added": true,
 *    }
 *
-* @apiSuccess {Object}  Response             Response Object
-* @apiSuccess {Boolean} Response.Favorite    Boolean Value Indicating successful User Update
 *
 *
 * @apiError 500 Failed to submit one or more REQUIRED field
@@ -81,7 +53,7 @@ function searchDeepBE(req, res) {
 * @apiErrorExample Error-Response:
 *     HTTP/1.1 500 Internal Server Error
 *     {
-*        message: "Internal Server Error, failed to delete User."
+*        message: "Internal Server Error, failed to add favorite for User."
 *     }
 */
 
@@ -91,8 +63,33 @@ function addFavorite(req, res) {
     db('favorites')
         .insert(favoriteQuote)
         .then(favoriteAdded => res.status(200).json(Boolean(favoriteAdded)))
-        .catch(err => res.status(500).json({message:err}))
+        .catch(error => res.status(500).json({message:"Internal Server Error, failed to add favorite for User.", error}))
 }
+
+/**
+* @api {get} /api/users/favorites Get All User favorites
+* @apiName Get-Favorites
+* @apiDescription This Endpoint is used by all users to retrieve list of favorite quotes.
+* @apiPermission Users
+*
+* @apiGroup Users
+* 
+* @apiSuccessExample Success-Response:
+*     HTTP/1.1 200 OK
+*     [
+*       
+*     ] 
+*
+* @apiSuccess {Array}   Qoutes        Array of favorite Quotes 
+*
+* @apiError 500    Error Sending out Favorites list for query
+*
+* @apiErrorExample Error-Response:
+*     HTTP/1.1 500 Bad Request
+*     {
+*       "message": "Error Sending out Favorites list for query"
+*     }
+*/
 
 function getFavorites(req, res) {
     const userID = req.decoded.id

@@ -14,19 +14,7 @@ module.exports = server => {
 * @apiDescription This endpoint is restricted to members with admin permissions and directly modifies the user row in the database.
 *       This can be used to grant additional permissions needed or update user details.
 *
-* @apiPermission admin
-*
-* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
-* @apiHeader (Authorization) {Object} headers.Authorization             This is the Authorization object within the headers
-* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Authorization token recieved and stored upon login 
-*
-* @apiHeaderExample {json} Authorization Header-Example:
-*     {
-*       "headers": "Authorization": {
-*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
-*      }
-*    }
-*  
+* @apiPermission Admin
 *
 * @apiParamExample {json} Input 
 *     {
@@ -82,19 +70,8 @@ function update(req, res) {
 * @apiName Delete-User
 * @apiGroup Admin
 * @apiDescription This endpoint is restricted to members with admin permissions and deletes the user row in the database.
-* @apiPermission admin
+* @apiPermission Admin
 *
-* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
-* @apiHeader (Authorization) {Object} headers.Authorization             This is the Authorization object within the headers
-* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Authorization token recieved and stored upon login 
-*
-* @apiHeaderExample {json} Authorization Header-Example:
-*     {
-*       "headers": "Authorizaton": {
-*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
-*      }
-*    }
-*  
 *
 * @apiSuccessExample Success-Response:
 *     HTTP/1.1 200 OK
