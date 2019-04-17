@@ -526,7 +526,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/api/users/favorites",
+    "url": "/users/favorites",
     "title": "Get All User favorites",
     "name": "Get_Favorites",
     "description": "<p>This Endpoint is used by all users to retrieve list of favorite quotes.</p>",
@@ -630,7 +630,7 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/api/Users/favorites",
+    "url": "/Users/favorites",
     "title": "Add User Favorite",
     "name": "Post_Favorites",
     "group": "Users",
@@ -719,7 +719,7 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/api/Users/search",
+    "url": "/users/search",
     "title": "Search Database for Quotes",
     "name": "Post_Search",
     "group": "Users",

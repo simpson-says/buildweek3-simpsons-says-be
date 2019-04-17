@@ -9,7 +9,7 @@ module.exports = server => {
   };
 
 /**
-* @api {post} /api/Users/search     Search Database for Quotes
+* @api {post} /users/search     Search Database for Quotes
 * @apiName Post-Search
 * @apiGroup Users
 * @apiDescription This endpoint is open to all users to Search for simpsons quotes using our algorithm, and returns a list of 10 Quotes from the DB.
@@ -142,7 +142,7 @@ function searchDeepBE(req, res) {
 }
 
 /**
-* @api {post} /api/Users/favorites Add User Favorite
+* @api {post} /Users/favorites Add User Favorite
 * @apiName Post-Favorites
 * @apiGroup Users
 * @apiDescription This endpoint is open to all users to add a favorite quote to our DB for querying.
@@ -178,16 +178,15 @@ function searchDeepBE(req, res) {
 */
 
 function addFavorite(req, res) {
-    const favoriteQuote = req.body
-
+    const favoriteQuote = { quoteID: req.body.quoteID, userID: req.decoded.id }
     db('favorites')
         .insert(favoriteQuote)
-        .then(favoriteAdded => res.status(200).json(Boolean(favoriteAdded)))
+        .then(favoriteAdded => res.status(200).json({"Favorite-Added": Boolean(favoriteAdded)}))
         .catch(error => res.status(500).json({message:"Internal Server Error, failed to add favorite for User.", error}))
 }
 
 /**
-* @api {get} /api/users/favorites Get All User favorites
+* @api {get} /users/favorites Get All User favorites
 * @apiName Get-Favorites
 * @apiDescription This Endpoint is used by all users to retrieve list of favorite quotes.
 * @apiPermission Users
