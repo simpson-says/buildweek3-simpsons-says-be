@@ -5,7 +5,6 @@ module.exports = {
 	getFavorites: () => {
 		return db('quotes');
 	},
-
 	// add new quote to favorites
 	addFavorite: newQuote => {
 		return db('quotes').insert(newFavorite);

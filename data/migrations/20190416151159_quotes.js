@@ -19,11 +19,10 @@ exports.up = function(knex) {
         .inTable('users')
         .notNullable();
  
-     tbl.timestamps(true, true);
+     quotes.timestamps(true, true);
     })
 };
 
 exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists('quotes');
 };
-;

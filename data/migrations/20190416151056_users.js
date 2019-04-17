@@ -9,7 +9,7 @@ exports.up = function(knex) {
         .unique();
 
       users
-        .string('pw')
+        .string('password')
         .notNullable()
     })
 };
@@ -17,4 +17,3 @@ exports.up = function(knex) {
 exports.down = function(knex, Promise) {
   return knex.schema.dropTableIfExists('users');
 };
-;

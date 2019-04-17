@@ -23,10 +23,10 @@ password - string, string  */
 
 function register(req, res) {
 	const user = req.body;
-	const hash = bcrypt.hashSync(user.pw, 8);
-	user.pw = hash;
+	const hash = bcrypt.hashSync(user.password, 8);
+	user.password = hash;
 
-	if (user.username && user.pw) {
+	if (user.username && user.password) {
 		db
 			.addUser(user)
 			.then(user => {
