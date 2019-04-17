@@ -15,6 +15,7 @@ string
 
 // /favorites - gets existing favorites
 router.get('/favorites', async (req, res) => { 
+	const userID = req.decoded.id
 	try {
 		// const favorites = await db.getFavorites(); // gets favorites existing in db
 		// res.status(200).json(quotes); // OK status
@@ -27,20 +28,24 @@ router.get('/favorites', async (req, res) => {
 	}
 });
 
-// /addFavorite - adds a new favorite to the existing list of favorites - string - ID 
+// Favorite - adds a new favorite to the existing list of favorites - string - ID 
 router.post('/favorites/:id', async (req, res) => {
-	const { id } = req.params;
-	const newFaveQuote = req.body; // var set to all favorites
-	if (!newFaveQuote.quote || !newFaveQuote.char) {  // if missing quote or character portion of entry
-		res.status(400).json({ errorMessage: 'Quote and character require to add to favorites.' });
-	} else {
+	const newFaveQuote = {
+		quote_id: req.body.quote_id, 
+		user_id: req.decoded.id
+	}
+	const { id } = quote_id;
+	 // var set to all favorites
+	// if (!newFaveQuote.quote || !newFaveQuote.char) {  // if missing quote or character portion of entry
+	// 	res.status(400).json({ errorMessage: 'Quote and character require to add to favorites.' });
+	// } else {
 		try {
 			const newFavorite = await db.addFavorite(newFaveQuote); // add new quote to db
 			res.status(201).json(newFavorite); // OK status, quote added
 		} catch (error) {
 			res.status(500).json({ errorMessage: 'Could not save quote to database.' }); // error could not save quote
 		}
-	}
+	// }
 });
 
 //search - gets user generated search - string

@@ -7,7 +7,7 @@ module.exports = {
 	},
 	// add new quote to favorites
 	addFavorite: newQuote => {
-		return db('quotes').insert(newFavorite);
+		return db('quotes').insert(newQuote);
 	},
 	// get search from user
 	getSearch: newSearch => {
