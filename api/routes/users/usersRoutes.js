@@ -3,9 +3,9 @@ const db = require('../../../data/dbConfig')
 const axios = require('axios')
 
 module.exports = server => {
-    server.post('/users/favorites', authenticate, addFavorite);
-    server.post('/users/search', authenticate, searchDeepBE);
-    server.get('/users/favorites', authenticate, getFavorites);
+    server.post('/users/favorites',authenticate, addFavorite);
+    server.post('/users/search', searchDeepBE);
+    server.get('/users/favorites',authenticate,  getFavorites);
   };
 
 /**
@@ -132,12 +132,12 @@ module.exports = server => {
 function searchDeepBE(req, res) {
     const searchString = { quote:req.body.searchValue }
     
-    axios.post('https://simpsonssays.herokuapp.com/api', searchString)
+    axios.post(`https://simpsonssays.herokuapp.com/api?quote=${searchString}`)
         .then(deepBERes => { 
-            res.status(200).json({Querying: searchString})
-            res.data = deepBERes
+            console.log(deepBERes);
+            res.status(200).json(deepBERes.data)
         })
-        .Catch(error => res.status(500).json({message: "Error Sending out search String for query", error}))
+        .catch(error => res.status(500))
     
 }
 
@@ -244,9 +244,10 @@ function getFavorites(req, res) {
     db('favorites')
         .where({ userID })
         .then(favorites => {
-            res.status(200).json({Retrieving: favorites.quoteID})
-
-            axios.post('https://simpsonssays.herokuapp.com/getquote',{ input: favorites.quoteID })
+            const quoteIDs = favorites.map((e,i)=>{
+                return e.quoteID
+            })
+            axios.post(`https://simpsonssays.herokuapp.com/getquote?=${quoteIDs}`)
                 .then(res => res.status(200).json(res.data))
                 .Catch(error => res.status(500).json({message: "Error Sending out Favorites list for query", error}))
         })
