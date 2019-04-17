@@ -130,11 +130,10 @@ module.exports = server => {
 */
 
 function searchDeepBE(req, res) {
-    const searchString = { quote:req.body.searchValue }
+    const searchString = { quote: req.body.searchValue }
     
     axios.post(`https://simpsonssays.herokuapp.com/api?quote=${searchString}`)
         .then(deepBERes => { 
-            console.log(deepBERes);
             res.status(200).json(deepBERes.data)
         })
         .catch(error => res.status(500))
@@ -244,11 +243,12 @@ function getFavorites(req, res) {
     db('favorites')
         .where({ userID })
         .then(favorites => {
-            const quoteIDs = favorites.map((e,i)=>{
-                return e.quoteID
-            })
-            axios.post(`https://simpsonssays.herokuapp.com/getquote?=${quoteIDs}`)
-                .then(res => res.status(200).json(res.data))
+            res.status(200).json({Retrieving: favorites.map(quote => quote.quoteID)})
+
+            axios.post('https://simpsonssays.herokuapp.com/getquote',{ input: favorites.map(quote => quote.quoteID)})
+                .then(deepBERes => {
+                    res.status(200).json(deepBERes.data)
+                })
                 .Catch(error => res.status(500).json({message: "Error Sending out Favorites list for query", error}))
         })
         .catch(error => res.status(500).json({message:"Failed to find that you in our records", error}))
