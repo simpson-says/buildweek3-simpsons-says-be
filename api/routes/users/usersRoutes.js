@@ -230,7 +230,6 @@ function addFavorite(req, res) {
 *  }
 * ] 
 *
-*
 * @apiError 500    Error Sending out Favorites list for query
 *
 * @apiErrorExample Error-Response:
