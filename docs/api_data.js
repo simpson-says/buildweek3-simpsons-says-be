@@ -537,24 +537,73 @@ define({ "api": [
     ],
     "group": "Users",
     "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n[\n  \n]",
-          "type": "json"
-        }
-      ],
       "fields": {
         "Success 200": [
           {
             "group": "Success 200",
             "type": "Array",
             "optional": false,
-            "field": "Qoutes",
-            "description": "<p>Array of favorite Quotes</p>"
+            "field": "Response",
+            "description": "<p>Array of Quote objects</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Objects",
+            "optional": false,
+            "field": "Response.Quote",
+            "description": "<p>Quote Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.episode_title",
+            "description": "<p>Title of the quotes Episode</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.number_in_season",
+            "description": "<p>Which episode number in each season</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.quote_id",
+            "description": "<p>Quotes Unique ID</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.raw_character_text",
+            "description": "<p>Character speaking the quote</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.season",
+            "description": "<p>Season the quote is from</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.spoken_words",
+            "description": "<p>The quote</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n[\n {\n   'episode_title': 'Simpsons Roasting on an Open Fire',\n   'number_in_season': 1,\n   'quote_id': 10,\n   'raw_character_text': 'Homer Simpson',\n   'season': 1,\n   'spoken_words': 'Pardon my galoshes.'},\n {\n   'episode_title': 'Simpsons Roasting on an Open Fire',\n   'number_in_season': 1,\n   'quote_id': 20,\n   'raw_character_text': 'Bart Simpson',\n   'season': 1,\n   'spoken_words': '\"JINGLE BELLS, BATMAN SMELLS, ROBIN LAID AN EGG / THE BATMOBILE BROKE ITS WHEEL, THE JOKER GOT AWAY.\"'},\n {\n   'episode_title': 'Bart the Genius',\n   'number_in_season': 2,\n   'quote_id': 555,\n   'raw_character_text': 'Sydney',\n   'season': 1,\n   'spoken_words': 'Anything you say.'\n }\n]",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {
@@ -660,6 +709,137 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to add favorite for User.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "post",
+    "url": "/api/Users/search",
+    "title": "Search Database for Quotes",
+    "name": "Post_Search",
+    "group": "Users",
+    "description": "<p>This endpoint is open to all users to Search for simpsons quotes using our algorithm, and returns a list of 10 Quotes from the DB.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Quote",
+            "description": "<p>Request Object</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "Quote.searchValue",
+            "description": "<p>String that will be used by the algorithm to search DB</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input ",
+          "content": "{\n  \"searchValue\": \"The Magic\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Array Housing 10 Quotes that match the searchValue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Objects",
+            "optional": false,
+            "field": "Response.Quote",
+            "description": "<p>Quote Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.episode_title",
+            "description": "<p>Title of the quotes Episode</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.number_in_season",
+            "description": "<p>Which episode number in each season</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.quote_id",
+            "description": "<p>Quotes Unique ID</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.raw_character_text",
+            "description": "<p>Character speaking the quote</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.season",
+            "description": "<p>Season the quote is from</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.spoken_words",
+            "description": "<p>The quote</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n[\n  {\n   'episode_title': 'Homer Defined',\n   'number_in_season': 5,\n   'quote_id': 12037,\n   'raw_character_text': 'Homer Simpson',\n   'season': 3,\n   'spoken_words': 'Thanks, Magic.'\n },\n {\n   'episode_title': 'A Tale of Two Springfields',\n   'number_in_season': 2,\n   'quote_id': 71922,\n   'raw_character_text': 'Homer Simpson',\n   'season': 12,\n   'spoken_words': 'Magic Bus!'\n },\n {\n   'episode_title': 'The Great Money Caper',\n   'number_in_season': 7,\n   'quote_id': 73298,\n   'raw_character_text': 'Homer Simpson',\n   'season': 12,\n   'spoken_words': \"Oh, right, the magic. The magic was great. It's really... the way to go.\"\n },\n {\n   'episode_title': 'Treehouse of Horror XII',\n   'number_in_season': 1,\n   'quote_id': 78098,\n   'raw_character_text': 'Lisa Simpson',\n   'season': 13,\n   'spoken_words': \"This isn't my wand. It's a Twizzler!\"\n },\n {\n   'episode_title': 'The Italian Bob',\n   'number_in_season': 8,\n   'quote_id': 104620,\n   'raw_character_text': 'Homer Simpson',\n   'season': 17,\n   'spoken_words': \"I know, and he's magic!\"\n },\n {\n   'episode_title': 'Elementary School Musical',\n   'number_in_season': 1,\n   'quote_id': 130924,\n   'raw_character_text': 'Kurt Hardwick',\n   'season': 22,\n   'spoken_words': 'The magic of art.'\n },\n {\n   'episode_title': 'The Fight Before Christmas',\n   'number_in_season': 8,\n   'quote_id': 132714,\n   'raw_character_text': 'Martha Stewart',\n   'season': 22,\n   'spoken_words': \"Well, thanks for wasting my time. I'll just wave my magic wand and turn everything back the way it was!\"\n },\n {\n   'episode_title': 'The Fight Before Christmas',\n   'number_in_season': 8,\n   'quote_id': 132715,\n   'raw_character_text': 'Marge Simpson',\n   'season': 22,\n   'spoken_words': 'You have a magic wand?'\n },\n {\n   'episode_title': 'The Book Job',\n   'number_in_season': 6,\n   'quote_id': 137953,\n   'raw_character_text': 'Seymour Skinner',\n   'season': 23,\n   'spoken_words': \"But it's actually magic!\"\n \n },\n {\n  'episode_title': 'White Christmas Blues',\n  'number_in_season': 8,\n  'quote_id': 150568,\n  'raw_character_text': 'Bart Simpson',\n  'season': 25,\n  'spoken_words': 'And wand.'\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "500",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Error Sending out search String for query.\"\n}",
           "type": "json"
         }
       ]

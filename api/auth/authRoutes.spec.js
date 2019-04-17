@@ -4,10 +4,10 @@ const db = require('../../data/dbConfig');
 
 describe('Authentication Router Tests', () => {
     beforeEach(async () => {
-        await db('users').truncate();
+        await db('users').del();
     });
     afterEach(async () => {
-        await db('users').truncate();
+        await db('users').del();
     });
 
     describe('/api/register POST', () => {
@@ -24,7 +24,7 @@ describe('Authentication Router Tests', () => {
                 await request(server)
                   .post("/api/register")
                   .send({ username: "Lincoln", password: "password" });
-                let users = await db("users").where({ username: "Lincoln" });
+                let users = await db("users");
                 expect(users.length).toBe(1);
           
                 await request(server)
@@ -32,7 +32,7 @@ describe('Authentication Router Tests', () => {
                   .send({ username: "Reagan", password: "america" });
                 users = await db("users");
                 expect(users).toHaveLength(2);
-              });
+            });
         });
     });
 

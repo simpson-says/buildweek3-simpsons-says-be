@@ -11,18 +11,17 @@ describe('Admin Router', () => {
     });
 
 
-    describe('Update User', () => {
+    describe.skip('Update User', () => {
         describe('Success', () => {
             it('should respond with status code 200', async () => {
-                const registerResponse = await request(server)
-                                                .post('/api/register')
-                                                .send({ username: "George", password:"thisWouldBeHashed" })
-                    .expect(200);
-
-                return request(server)
+                const response = await request(server)
                     .post('/api/register')
                     .send({ username: "George", password:"thisWouldBeHashed" })
-                    .expect(200);
+
+                await request(server)
+                    .post('/api/admin/users/1')
+                    .send({ username: "frank", role:"team lead" })
+                    .expect(response.updated).toEqual({ updated: true })
             });
         });
     });
