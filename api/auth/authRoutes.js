@@ -106,12 +106,19 @@ function register(req, res) {
 *     HTTP/1.1 200 OK
 *    {
 *      "message": "Hello homer",
-*      "token": "eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
+*      "token": "eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM",
+*      "favorites":  [
+*        5,
+*        13,
+*        11,
+*        6
+*      ]
 *    }
 *
-* @apiSuccess {Object} Response            Response Object
-* @apiSuccess {String} Response.message    Greeting Message to User
-* @apiSuccess {String} Response.token      Authentication token
+* @apiSuccess {Object} Response               Response Object
+* @apiSuccess {String} Response.message       Greeting Message to User
+* @apiSuccess {String} Response.token         Authentication token
+* @apiSuccess {Array}  Response.favorites     Array of favorite quoteIDs
 *
 *
 * @apiError 422 Failed to submit one or more REQUIRED field
@@ -123,8 +130,8 @@ function register(req, res) {
 *     }
 *
 * @apiHeader (Authorization) {Object} headers                           This is the Request headers 
-* @apiHeader (Authorization) {Object} headers.Authorization             This is the Autorization object within the headers
-* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Autorization token recieved and stored upon login 
+* @apiHeader (Authorization) {Object} headers.Authorization             This is the Authorization object within the headers
+* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Authorization token received and stored upon login 
 *
 * @apiHeaderExample {json} Authorization Header-Example:
 *     {

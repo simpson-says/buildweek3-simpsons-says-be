@@ -409,7 +409,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n  \"message\": \"Hello homer\",\n  \"token\": \"eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"message\": \"Hello homer\",\n  \"token\": \"eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\",\n  \"favorites\":  [\n    5,\n    13,\n    11,\n    6\n  ]\n}",
           "type": "json"
         }
       ],
@@ -435,6 +435,13 @@
             "optional": false,
             "field": "Response.token",
             "description": "<p>Authentication token</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Response.favorites",
+            "description": "<p>Array of favorite quoteIDs</p>"
           }
         ]
       }
@@ -473,14 +480,14 @@
             "type": "Object",
             "optional": false,
             "field": "headers.Authorization",
-            "description": "<p>This is the Autorization object within the headers</p>"
+            "description": "<p>This is the Authorization object within the headers</p>"
           },
           {
             "group": "Authorization",
             "type": "String",
             "optional": false,
             "field": "headers.Authorization.token",
-            "description": "<p>This is the Autorization token recieved and stored upon login</p>"
+            "description": "<p>This is the Authorization token received and stored upon login</p>"
           }
         ]
       },
@@ -682,14 +689,14 @@
             "type": "Boolean",
             "optional": false,
             "field": "Response.Favorite",
-            "description": "<p>Boolean Value Indicating successful User Update</p>"
+            "description": "<p>Boolean Value Indicating successful User Update of Favorites stored in the DB(this toggles the favorite on and off when used)</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n  \"Favorite-Added\": true,\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"Favorite-Modified\": true,\n}",
           "type": "json"
         }
       ]

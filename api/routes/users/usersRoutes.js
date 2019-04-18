@@ -248,12 +248,12 @@ function generateQuote(req, res) {
 *
 * 
 * @apiSuccess {Object}  Response             Response Object
-* @apiSuccess {Boolean} Response.Favorite    Boolean Value Indicating successful User Update
+* @apiSuccess {Boolean} Response.Favorite    Boolean Value Indicating successful User Update of Favorites stored in the DB(this toggles the favorite on and off when used)
 *
 * @apiSuccessExample Success-Response:
 *     HTTP/1.1 200 OK
 *    {
-*      "Favorite-Added": true,
+*      "Favorite-Modified": true,
 *    }
 *
 *
