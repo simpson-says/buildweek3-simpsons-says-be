@@ -13,7 +13,7 @@ All dependencies have been linked through packages attached
     1. Add and link .env file
         * add `.env` file to root directory
         * add required enviorment variables
-            *   1. DB_ENV=development
-            *   1. PORT=`<port on local machine>`
-            *   1. JWT_SECRET=`<LONG string to be used for salting hashed passwords>`
+           1. DB_ENV=development
+           1. PORT=`<port on local machine>`
+           1. JWT_SECRET=`<LONG string to be used for salting hashed passwords>`
     
