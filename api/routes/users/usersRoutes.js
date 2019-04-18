@@ -142,10 +142,10 @@ function searchDeepBE(req, res) {
 
 function generateQuote(req, res) {
     const acceptableInputs = ['homer', 'marge', 'bart', 'lisa', 'moe', 'grampa', 'skinner']
-    const input = {input: req.body.genChar}
+    const input = req.body.genChar
 
-    acceptableInputs.includes(input.input)
-        ? axios.post(`https://eat-my-shorts.herokuapp.com/gen`, input)
+    acceptableInputs.includes(input)
+        ? axios.post(`https://eat-my-shorts.herokuapp.com/gen?input=${input}`)
             .then(deepBERes => { 
                 res.status(200).json(deepBERes.data)
             })
