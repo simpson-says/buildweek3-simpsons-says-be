@@ -1,5 +1,5 @@
-# [For Usage Docs](http://simpsonsaysapidocs.surge.sh/)
-
+# Simpson Says REST API
+## [For Live Server Usage](http://simpsonsaysapidocs.surge.sh/)
 ## **For Running Locally**
 
 All dependencies have been linked through packages attached
