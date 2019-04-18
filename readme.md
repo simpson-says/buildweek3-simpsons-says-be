@@ -1,6 +1,6 @@
-#[For Usage Docs](http://simpsonsaysapidocs.surge.sh/)
+# [For Usage Docs](http://simpsonsaysapidocs.surge.sh/)
 
-##**For Running Locally**
+## **For Running Locally**
 
 All dependencies have been linked through packages attached
 1. To link and install all dependencies
