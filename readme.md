@@ -14,11 +14,11 @@ All dependencies have been linked through packages attached
         1. `JWT_SECRET=<LONG string to be used for salting hashed passwords>` to create a unique secret string that is used to salt hashed passwords for security, and data integrity on token signatures
 
 1. Fire up server
-    1. Migrate DB Tables
+    * Migrate DB Tables
         * run `yarn knex migrate:latest`
-    1. Seed Data to DB tables
+    * Seed Data to DB tables
         * run `yarn knex seed:run`
-    1. Start server
+    * Start server
         * run `yarn server`
             * This by default will initiate the server to run locally on the hosted port using the server listener, and the development DataBase as Well as default seeded data.
     
