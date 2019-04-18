@@ -138,26 +138,28 @@ function register(req, res) {
 function login(req, res) {
   // implement user login
   let { username, password } = req.body;
-
   username && password 
   ? db('users')
-      .where({ username })
-      .first()
-      .then(user => {
-        // JWT config data
-        const payload = {
-          subject: "User-Data",
-          username: user.username,
-          id: user.id,
-          role: user.role
-        }
-        const options = {
-          expiresIn: '365d'
-        }
-        const token = jwt.sign(payload, secret, options)
-
+  .where({ username })
+  .first()
+  .then(async user => {
+    // JWT config data
+    const payload = {
+      subject: "User-Data",
+      username: user.username,
+      id: user.id,
+      role: user.role
+    }
+    const options = {
+      expiresIn: '365d'
+    }
+    const token = jwt.sign(payload, secret, options)
+    const favorites = await db('favorites')
+                      .where({userID: payload.id})
+                      .then(favArray => favArray.map(favObj => favObj.quoteID))
+    
         username && bcrypt.compareSync(password, user.password)
-          ? res.status(200).json({ message: `Hello ${user.username}`, token })
+          ? res.status(200).json({ message: `Hello ${user.username}`, token, favorites })
           : res
             .status(401)
             .json({ message: 'Username or Password do not match out records' });
