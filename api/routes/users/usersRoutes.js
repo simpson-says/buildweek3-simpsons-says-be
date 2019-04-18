@@ -269,8 +269,10 @@ function generateQuote(req, res) {
 
 function addFavorite(req, res) {
     const favoriteQuote = { quoteID: req.body.quoteID, userID: req.decoded.id }
+    console.log(favoriteQuote);
 
-    db('favorites').where({userID: favoriteQuote.userID, quoteID: favoriteQuote.quoteID}).del().then(delRes =>  Boolean(delRes) 
+    db('favorites').where({userID: favoriteQuote.userID, quoteID: favoriteQuote.quoteID}).del()
+    .then(delRes =>  Boolean(delRes) 
         ? res.status(200).json({"Favorite-Modified": Boolean(delRes)}) 
         :  db('favorites')
             .insert(favoriteQuote)
