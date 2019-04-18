@@ -270,12 +270,8 @@ function generateQuote(req, res) {
 function addFavorite(req, res) {
     const favoriteQuote = { quoteID: req.body.quoteID, userID: req.decoded.id }
 
+    res.status(404).json({message: "That quote seems to already be a favorite, try another"})
     db('favorites')
-        .where({userID : req.decoded.id})
-        .then(resArray => resArray.map(quote => quote.quoteID !== favoriteQuote.quoteID ? true : false))
-        .includes(false)
-    ? res.status(404).json({message: "That quote seems to already be a favorite, try another"})
-    : db('favorites')
         .insert(favoriteQuote)
         .then(favoriteAdded => res.status(200).json({"Favorite-Added": Boolean(favoriteAdded)}))
         .catch(error => res.status(500).json({message:"Internal Server Error, failed to add favorite for User.", error}))   
