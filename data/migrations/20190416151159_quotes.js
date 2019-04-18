@@ -2,14 +2,10 @@ exports.up = function(knex) {
     return knex.schema
     .createTable('quotes', quotes => {
       quotes.increments();
-
+      
       quotes
-        .string('char')
-        .notNullable()
-        .unique();
-
-      quotes
-        .string('quote')
+        .integer('quote_id')
+        .unsigned()
         .notNullable()
 
       quotes

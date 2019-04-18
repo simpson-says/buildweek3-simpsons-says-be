@@ -24,6 +24,6 @@ function addUser(user) {
 // GET user - id
 function getUserById(id) {
   return db('users')
-    .where({ id })
+    .where('id', id)
     .first();
 }
