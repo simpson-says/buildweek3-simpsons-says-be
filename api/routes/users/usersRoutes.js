@@ -5,6 +5,7 @@ const axios = require('axios')
 module.exports = server => {
     server.post('/users/favorites',authenticate, addFavorite);
     server.post('/users/search', searchDeepBE);
+    server.post('/users/generate', generateQuote);
     server.get('/users/favorites',authenticate,  getFavorites);
   };
 
@@ -136,6 +137,20 @@ function searchDeepBE(req, res) {
             res.status(200).json(deepBERes.data)
         })
         .catch(error => res.status(500))
+    
+}
+
+function generateQuote(req, res) {
+    const acceptableInputs = ['homer', 'marge', 'bart', 'lisa', 'moe', 'grampa', 'skinner']
+    const input = {input: req.body.genChar}
+
+    acceptableInputs.includes(input.input)
+        ? axios.post(`https://eat-my-shorts.herokuapp.com/gen`, input)
+            .then(deepBERes => { 
+                res.status(200).json(deepBERes.data)
+            })
+            .catch(error => res.status(500).json({message: "Failed to generate Quote", error}))
+        : res.status(404).json({message: "That charecter can not be used to generate a quote, please select another from the list.", list:acceptableInputs})
     
 }
 
