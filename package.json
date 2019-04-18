@@ -4,9 +4,9 @@
 	"description": "Simpson Search Algorithm",
 	"main": "index.js",
 	"scripts": {
-		"server": "nodemon index.js DB_ENV=development && surge -p docs -d simpsonsaysapidocs.surge.sh",
+		"server": "nodemon index.js DB_ENV=development",
 		"test": "cross-env DB_ENV=testing && yarn knex migrate:latest --env testing && jest --watchAll --verbose",
-		"start": "node index.js && surge -p docs -d simpsonsaysapidocs.surge.sh",
+		"start": "node index.js",
 		"reset-dev-DB": "yarn knex migrate:rollback && yarn knex migrate:latest && yarn knex seed:run"
 	},
 	"jest": {
