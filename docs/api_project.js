@@ -4,8 +4,7 @@ define({
   "order": [
     "Authentication",
     "Users",
-    "Admin",
-    "PostError"
+    "Admin"
   ],
   "name": "simpsonsays",
   "version": "1.0.0",
@@ -15,7 +14,7 @@ define({
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-04-17T09:48:31.594Z",
+    "time": "2019-04-18T02:58:21.199Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }

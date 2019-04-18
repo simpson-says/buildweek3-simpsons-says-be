@@ -63,7 +63,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/api/users",
+    "url": "/api/admin/users",
     "title": "Request All User Data",
     "name": "Get_Users",
     "description": "<p>This Endpoint is used by Authorized users with granted permissions to retrieve all stored users from the database</p>",
@@ -148,7 +148,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./api/auth/authRoutes.js",
+    "filename": "./api/routes/admin/adminRoutes.js",
     "groupTitle": "Admin"
   },
   {
@@ -709,6 +709,109 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to add favorite for User.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "post",
+    "url": "/users/generate",
+    "title": "Generate AI quotes",
+    "name": "Post_Generate",
+    "group": "Users",
+    "description": "<p>This endpoint is open to all users to generate random quotes given a character using AI and returns a list of 10 AI generated Quotes.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Quote",
+            "description": "<p>Request Object</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "Quote.genChar",
+            "description": "<p>Character from the Approved list</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input ",
+          "content": "{\n  \"genChar\": \"bart\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Array Housing 10 Quotes that match the searchValue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Objects",
+            "optional": false,
+            "field": "Response.Quote",
+            "description": "<p>Quote Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.charname",
+            "description": "<p>Character name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.quote",
+            "description": "<p>The generated quote</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n [\n   {\n     \"quote\": \"i love a lot of them but i was being idea.\"\n   },\n   {\n     \"quote\": \"(thoughtful) oh. i made a new fight. i'm just a little baby\"\n   },\n   {\n     \"quote\": \"a lot of it just turned the job from.\"\n   },\n   {\n     \"quote\": \"(chuckles) okay in your heart... and i've been hearing about it.\"\n   },\n   {\n     \"quote\": \"(earnest) i can't believe a thousand dollars of a bit faith.\"\n   },\n   {\n     \"quote\": \"i can't believe it. (exasperated sound) get 'em\"\n   },\n   {\n     \"quote\": \"(shrugs) i don't have a lot of hearing about the time.\"\n   },\n   {\n     \"quote\": \"the guys who wrote something better like this or lose a good dog.\"\n   },\n   {\n     \"quote\": \"(shouts) it's the first thing you're take care!\"\n   },\n   {\n     \"quote\": \"(horrified) a kid killed an axe. (shudders) but\"\n   }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "404",
+            "description": "<p>That character can not be used to generate a quote, please select another from the list.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Internal Server Error\n{\n   message: \"That character can not be used to generate a quote, please select another from the list.\",\n   list:[\n      'homer', \n      'marge', \n      'bart', \n      'lisa', \n      'moe', \n      'grampa', \n      'skinner'\n  ]\n}",
           "type": "json"
         }
       ]
