@@ -26,9 +26,8 @@ function register(req, res) {
 	user.password = hash;
 
 	if (user.username && user.password) {
-		db
-			.addUser(user)
-			.then(user => {
+		db.addUser(user)
+		   .then(user => {
 				res.status(201).json({ message: 'User added.', user });
 			})
 			.catch(err => {
@@ -43,9 +42,8 @@ function login(req, res) {
 	const { username, password } = req.body;
 
 	if (username && password) {
-		db
-			.getUserByName({ username })
-			.then(user => {
+		db.getUserByName({ username })
+		  .then(user => {
 				if (bcrypt.compareSync(password, user.password)) {
 					const token = generateToken(user);
 
