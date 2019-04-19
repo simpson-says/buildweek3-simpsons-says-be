@@ -1,1 +1,0 @@
-// separate quote db for each user/search?
