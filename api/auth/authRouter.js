@@ -11,15 +11,14 @@ const { authenticate } = require('../auth/authenticate');
 const express = require('express');
 const router = express.Router();
 
-router.post("/register", register);
-router.post("/login", login);
+router.post('/register', register);
+router.post('/login', login);
 
 /*register - adds new user - user, 
 password, ID - string, string, 2 
 
 /login - let's existing user login user, 
 password - string, string  */
-
 
 function register(req, res) {
 	const user = req.body;
@@ -38,7 +37,7 @@ function register(req, res) {
 	} else {
 		res.status(401).json({ message: 'Username and password required.' });
 	}
-};
+}
 
 function login(req, res) {
 	const { username, password } = req.body;
@@ -61,9 +60,9 @@ function login(req, res) {
 	} else {
 		res.status(401).json({ message: 'Username and password required.' });
 	}
-};
+}
 
-function generateToken (user) {
+function generateToken(user) {
 	const payload = {
 		subject: user.id,
 		username: user.username
@@ -72,6 +71,6 @@ function generateToken (user) {
 		expiresIn: '1d'
 	};
 	return jwt.sign(payload, secret, options);
-};
+}
 
 module.exports = router;
