@@ -7,72 +7,27 @@ const secret = process.env.JWT_SECRET;
 module.exports = server => {
   server.post('/api/register', register);
   server.post('/api/login', login);
-  server.get('/api/admin/users', authenticate, validateRole, getUsers);
 };
 
 /**
-* @api{get} /api/users Request All User Data
-* @apiName Get Users
-* @apiPermission Admin
-* @apiGroup Admin
-* 
-* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
-* @apiHeader (Authorization) {Object} headers.Authorization             This is the Autorization object within the headers
-* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Autorization token recieved and stored upon login 
-*
-* @apiHeaderExample {json} Authorization Header-Example:
-*     {
-*       "headers": "Authorizaton": {
-*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
-*      }
-*    }
-* 
-* @apiSuccessExample Success-Response:
-*     HTTP/1.1 200 OK
-*     [
-*       {
-*         "id": 1,
-*         "username": "omar",
-*         "password": "$2a$10$SQpZI3OokvrWR80bFmrlD.BNVSlqbHDGhZRgqhrWr8bhbHgyBH7Uq",
-*         "role": "admin"
-*       },
-*       {
-*         "id": 2,
-*         "username": "adam",
-*         "password": "$2a$10$BlMZckrdp5QBVSdW/ZfncOyTlBXRGoFjFZ5h9UOm4mfbH2Jbvuvn6",
-*         "role": "user"
-*       },
-*       {
-*         "id": 3,
-*         "username": "victor",
-*         "password": "$2a$10$hVJEKAlxlWAKHaBhDu7W9uxWouxNqO5wJS0tPPM65uYCzSpMgPcpC",
-*         "role": "user"
-*       },
-*       ...
-*     ] 
-*
-* @apiSuccess {Array}   Users                Array of stored User Objects  
-* @apiSuccess {Object}  Users.User           User Object
-* @apiSuccess {Number}  Users.User.id        Users id.
-* @apiSuccess {String}  Users.User.username  Users Username
-* @apiSuccess {String}  Users.User.password  Users hashed and salted password
-* @apiSuccess {String}  Users.User.role      Users Permissions
-*/
-function getUsers(req, res) {
-  // implement user registration
-    db('users')
-      .then(users => res.status(200).json(users))
-      .catch(err => res.status(500).json({message:err}))
-}
-/**
-* @api {post} /api/register Registers New User
+* @api {post} /api/register Register New User
 * @apiName Register User
 * @apiGroup Authentication
+*
 * @apiParamExample {json} Input
 *    {
 *      "username": "doe",
-*      "role": "user"
-*    }.
+*      "password": "thisIsHashedAndSalted",
+*    }
+*
+*   | or |
+*
+*    {
+*      "username": "doe",
+*      "password": "thisIsHashedAndSalted",
+*      "role": "Lead Dev",
+*    }
+*    
 *
 * @apiParam {object} newUser New User
 * @apiParam {number} newUser.id  New user id.
@@ -84,7 +39,6 @@ function getUsers(req, res) {
 *     {
 *       "id": 1,
 *       "username": "doe",
-*       "password": "password"
 *       "role": "user"
 *     }
 *
@@ -94,8 +48,8 @@ function getUsers(req, res) {
 * @apiSuccess {string} newUser.role Users Permissions
 *
 *
-* @apiError Submission Failed to submit one or more REQUIRED field
-
+* @apiError 422-Unprocessable-entity Failed to submit one or more REQUIRED field
+*
 * @apiErrorExample Error-Response:
 *     HTTP/1.1 422 Unprocessable Entity
 *     {
@@ -126,17 +80,25 @@ function register(req, res) {
         })
     : res.status(422).json({message:"Please fill out a username & password before submitting"})
 }
+
 /**
-* @api {post} /api/Login Logs User in
+* @api {post} /api/Login User Login
 * @apiName User Login
 * @apiGroup Authentication
+* @apiDescription This end point will log users in by creating a limited timed access token. 
+*   This token will need to be stored and sent in ALL requests made to the server, and will 
+*   include your role based permissions for end point access. See the below example for reference.
+*
+* @apiPermission admin
+*
+*
 * @apiParamExample {json} Input 
 *    {
 *       "username": "homer",
 *       "password": "password"
 *     }
 *
-* @apiParam {Object} User               User
+* @apiParam {Object} User                User
 * @apiParam {Number} User.id            user id.
 * @apiParam {String} User.password      Password.
 *
@@ -144,43 +106,67 @@ function register(req, res) {
 *     HTTP/1.1 200 OK
 *    {
 *      "message": "Hello homer",
-*      "token": "eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
+*      "token": "eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM",
+*      "favorites":  [
+*        5,
+*        13,
+*        11,
+*        6
+*      ]
 *    }
 *
-* @apiSuccess {Object} Response            Response Object
-* @apiSuccess {String} Response.message    Greeting Message to User
-* @apiSuccess {String} Response.token      Authentication token
+* @apiSuccess {Object} Response               Response Object
+* @apiSuccess {String} Response.message       Greeting Message to User
+* @apiSuccess {String} Response.token         Authentication token
+* @apiSuccess {Array}  Response.favorites     Array of favorite quoteIDs
 *
 *
-* @apiError Submission Failed to submit one or more REQUIRED field
-
+* @apiError 422 Failed to submit one or more REQUIRED field
+*
 * @apiErrorExample Error-Response:
 *     HTTP/1.1 422 Unprocessable Entity
 *     {
 *       "message":"Please fill out a username & password before submitting"
 *     }
+*
+* @apiHeader (Authorization) {Object} headers                           This is the Request headers 
+* @apiHeader (Authorization) {Object} headers.Authorization             This is the Authorization object within the headers
+* @apiHeader (Authorization) {String} headers.Authorization.token       This is the Authorization token received and stored upon login 
+*
+* @apiHeaderExample {json} Authorization Header-Example:
+*     {
+*       "headers": "Authorization": {
+*       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM"
+*      }
+*    }
+* 
 */
+
 function login(req, res) {
   // implement user login
   let { username, password } = req.body;
-
   username && password 
   ? db('users')
-      .where({ username })
-      .first()
-      .then(user => {
-        // JWT config data
-        const payload = {
-          subject: user.username,
-          role:user.role
-        }
-        const options = {
-          expiresIn: '365d'
-        }
-        const token = jwt.sign(payload, secret, options)
-
+  .where({ username })
+  .first()
+  .then(async user => {
+    // JWT config data
+    const payload = {
+      subject: "User-Data",
+      username: user.username,
+      id: user.id,
+      role: user.role
+    }
+    const options = {
+      expiresIn: '365d'
+    }
+    const token = jwt.sign(payload, secret, options)
+    const favorites = await db('favorites')
+                      .where({userID: payload.id})
+                      .then(favArray => favArray.map(favObj => favObj.quoteID))
+    
         username && bcrypt.compareSync(password, user.password)
-          ? res.status(200).json({ message: `Hello ${user.username}`, token })
+          ? res.status(200).json({ message: `Hello ${user.username}`, token, favorites })
           : res
             .status(401)
             .json({ message: 'Username or Password do not match out records' });
@@ -190,3 +176,6 @@ function login(req, res) {
       })
   : res.status(422).json({message:"Please fill out a username & password before submitting"})
 }
+
+
+

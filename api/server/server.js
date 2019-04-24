@@ -5,6 +5,9 @@ server.use(require('cors')());
 server.use(require('express').json());
 
 require('../auth/authRoutes')(server);
+require('../routes/admin/adminRoutes')(server);
+require('../routes/users/usersRoutes')(server);
+
 
 server.get('/', (req, res) => {
     // Sanity Check

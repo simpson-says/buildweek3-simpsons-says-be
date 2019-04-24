@@ -1,49 +1,78 @@
 [
   {
-    "type": "get",
-    "url": "/api/users",
-    "title": "Request All User Data",
-    "name": "Get_Users",
+    "type": "delete",
+    "url": "/api/admin/del/:id",
+    "title": "Delete User Row",
+    "name": "Delete_User",
+    "group": "Admin",
+    "description": "<p>This endpoint is restricted to members with admin permissions and deletes the user row in the database.</p>",
     "permission": [
       {
         "name": "Admin"
       }
     ],
-    "group": "Admin",
-    "header": {
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n  \"deleted\": true,\n}",
+          "type": "json"
+        }
+      ],
       "fields": {
-        "Authorization": [
+        "Success 200": [
           {
-            "group": "Authorization",
+            "group": "Success 200",
             "type": "Object",
             "optional": false,
-            "field": "headers",
-            "description": "<p>This is the Request headers</p>"
+            "field": "Response",
+            "description": "<p>Response Object</p>"
           },
           {
-            "group": "Authorization",
-            "type": "Object",
+            "group": "Success 200",
+            "type": "Boolean",
             "optional": false,
-            "field": "headers.Authorization",
-            "description": "<p>This is the Autorization object within the headers</p>"
-          },
+            "field": "Response.updated",
+            "description": "<p>Boolean Value Indicating successful User Update</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
           {
-            "group": "Authorization",
-            "type": "String",
+            "group": "Error 4xx",
             "optional": false,
-            "field": "headers.Authorization.token",
-            "description": "<p>This is the Autorization token recieved and stored upon login</p>"
+            "field": "500",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
           }
         ]
       },
       "examples": [
         {
-          "title": "Authorization Header-Example:",
-          "content": " {\n   \"headers\": \"Authorizaton\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to delete User.\"\n}",
           "type": "json"
         }
       ]
     },
+    "version": "0.0.0",
+    "filename": "./api/routes/admin/adminRoutes.js",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "get",
+    "url": "/api/admin/users",
+    "title": "Request All User Data",
+    "name": "Get_Users",
+    "description": "<p>This Endpoint is used by Authorized users with granted permissions to retrieve all stored users from the database</p>",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "group": "Admin",
     "success": {
       "examples": [
         {
@@ -99,21 +128,136 @@
         ]
       }
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "404",
+            "description": "<p>You are not authorized to access this end point</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Bad Request\n{\n  \"message\": \"You are not authorized to access this end point\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "version": "0.0.0",
-    "filename": "./api/auth/authRoutes.js",
+    "filename": "./api/routes/admin/adminRoutes.js",
+    "groupTitle": "Admin"
+  },
+  {
+    "type": "post",
+    "url": "/api/users/:id",
+    "title": "Update User Row",
+    "name": "Update_User",
+    "group": "Admin",
+    "description": "<p>This endpoint is restricted to members with admin permissions and directly modifies the user row in the database. This can be used to grant additional permissions needed or update user details.</p>",
+    "permission": [
+      {
+        "name": "Admin"
+      }
+    ],
+    "parameter": {
+      "examples": [
+        {
+          "title": "Input ",
+          "content": "{\n  \"username\": \"homer\"\n}\n\n| or | \n\n{\n  \"role\": \"admin\"\n}\n\n| or |\n\n{\n  \"username\": \"homer\",\n  \"role\": \"admin\"\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Updated-User",
+            "description": "<p>User object with 1 or more optional field changed</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "User.username",
+            "description": "<p>Updated username</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "User.role",
+            "description": "<p>Users Roles for permissions</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n  \"updated\": true,\n}",
+          "type": "json"
+        }
+      ],
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Response Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Response.updated",
+            "description": "<p>Boolean Value Indicating successful User Update</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Submission",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to update User.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/admin/adminRoutes.js",
     "groupTitle": "Admin"
   },
   {
     "type": "post",
     "url": "/api/register",
-    "title": "Registers New User",
+    "title": "Register New User",
     "name": "Register_User",
     "group": "Authentication",
     "parameter": {
       "examples": [
         {
           "title": "Input",
-          "content": "{\n  \"username\": \"doe\",\n  \"role\": \"user\"\n}.",
+          "content": " {\n   \"username\": \"doe\",\n   \"password\": \"thisIsHashedAndSalted\",\n }\n\n| or |\n\n {\n   \"username\": \"doe\",\n   \"password\": \"thisIsHashedAndSalted\",\n   \"role\": \"Lead Dev\",\n }",
           "type": "json"
         }
       ],
@@ -155,7 +299,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"username\": \"doe\",\n  \"password\": \"password\"\n  \"role\": \"user\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"username\": \"doe\",\n  \"role\": \"user\"\n}",
           "type": "json"
         }
       ],
@@ -198,7 +342,7 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "Submission",
+            "field": "422-Unprocessable-entity",
             "description": "<p>Failed to submit one or more REQUIRED field</p>"
           }
         ]
@@ -218,13 +362,19 @@
   {
     "type": "post",
     "url": "/api/Login",
-    "title": "Logs User in",
+    "title": "User Login",
     "name": "User_Login",
     "group": "Authentication",
+    "description": "<p>This end point will log users in by creating a limited timed access token. This token will need to be stored and sent in ALL requests made to the server, and will include your role based permissions for end point access. See the below example for reference.</p>",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
     "parameter": {
       "examples": [
         {
-          "title": "Input",
+          "title": "Input ",
           "content": "{\n   \"username\": \"homer\",\n   \"password\": \"password\"\n }",
           "type": "json"
         }
@@ -259,7 +409,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": " HTTP/1.1 200 OK\n{\n  \"message\": \"Hello homer\",\n  \"token\": \"eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"message\": \"Hello homer\",\n  \"token\": \"eyJybGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib31hciIsInJvbGUiOiJhZG5pbiIsIilhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\",\n  \"favorites\":  [\n    5,\n    13,\n    11,\n    6\n  ]\n}",
           "type": "json"
         }
       ],
@@ -285,6 +435,13 @@
             "optional": false,
             "field": "Response.token",
             "description": "<p>Authentication token</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Response.favorites",
+            "description": "<p>Array of favorite quoteIDs</p>"
           }
         ]
       }
@@ -295,7 +452,7 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "Submission",
+            "field": "422",
             "description": "<p>Failed to submit one or more REQUIRED field</p>"
           }
         ]
@@ -304,6 +461,40 @@
         {
           "title": "Error-Response:",
           "content": "HTTP/1.1 422 Unprocessable Entity\n{\n  \"message\":\"Please fill out a username & password before submitting\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "header": {
+      "fields": {
+        "Authorization": [
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers",
+            "description": "<p>This is the Request headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "Object",
+            "optional": false,
+            "field": "headers.Authorization",
+            "description": "<p>This is the Authorization object within the headers</p>"
+          },
+          {
+            "group": "Authorization",
+            "type": "String",
+            "optional": false,
+            "field": "headers.Authorization.token",
+            "description": "<p>This is the Authorization token received and stored upon login</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Authorization Header-Example:",
+          "content": " {\n   \"headers\": \"Authorization\": {\n   \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijoib21hciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU1NTMxMjg4MCwiZXhwIjoxNTg2ODQ4ODgwfQ.Utm5C1v-_9Ql5tDPq7GvtWVZhYYpCZUz3q8bVCU2OwM\"\n  }\n}",
           "type": "json"
         }
       ]
@@ -339,5 +530,432 @@
     "group": "C__Users_elper_Desktop_work_Project_III_simpsonsays_docs_main_js",
     "groupTitle": "C__Users_elper_Desktop_work_Project_III_simpsonsays_docs_main_js",
     "name": ""
+  },
+  {
+    "type": "get",
+    "url": "/users/favorites",
+    "title": "Get All User favorites",
+    "name": "Get_Favorites",
+    "description": "<p>This Endpoint is used by all users to retrieve list of favorite quotes.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "group": "Users",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Array of Quote objects</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Objects",
+            "optional": false,
+            "field": "Response.Quote",
+            "description": "<p>Quote Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.episode_title",
+            "description": "<p>Title of the quotes Episode</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.number_in_season",
+            "description": "<p>Which episode number in each season</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.quote_id",
+            "description": "<p>Quotes Unique ID</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.raw_character_text",
+            "description": "<p>Character speaking the quote</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.season",
+            "description": "<p>Season the quote is from</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.spoken_words",
+            "description": "<p>The quote</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n[\n {\n   'episode_title': 'Simpsons Roasting on an Open Fire',\n   'number_in_season': 1,\n   'quote_id': 10,\n   'raw_character_text': 'Homer Simpson',\n   'season': 1,\n   'spoken_words': 'Pardon my galoshes.'},\n {\n   'episode_title': 'Simpsons Roasting on an Open Fire',\n   'number_in_season': 1,\n   'quote_id': 20,\n   'raw_character_text': 'Bart Simpson',\n   'season': 1,\n   'spoken_words': '\"JINGLE BELLS, BATMAN SMELLS, ROBIN LAID AN EGG / THE BATMOBILE BROKE ITS WHEEL, THE JOKER GOT AWAY.\"'},\n {\n   'episode_title': 'Bart the Genius',\n   'number_in_season': 2,\n   'quote_id': 555,\n   'raw_character_text': 'Sydney',\n   'season': 1,\n   'spoken_words': 'Anything you say.'\n }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "500",
+            "description": "<p>Error Sending out Favorites list for query</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Bad Request\n{\n  \"message\": \"Error Sending out Favorites list for query\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "post",
+    "url": "/Users/favorites",
+    "title": "Add User Favorite",
+    "name": "Post_Favorites",
+    "group": "Users",
+    "description": "<p>This endpoint is open to all users to add a favorite quote to our DB for querying.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Quote",
+            "description": "<p>Request Object</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "Quote.quoteID",
+            "description": "<p>ID number of the quote to Favorite</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input ",
+          "content": "{\n  \"quoteID\": 15\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Response Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "Response.Favorite",
+            "description": "<p>Boolean Value Indicating successful User Update of Favorites stored in the DB(this toggles the favorite on and off when used)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": " HTTP/1.1 200 OK\n{\n  \"Favorite-Modified\": true,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "500",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Internal Server Error, failed to add favorite for User.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "post",
+    "url": "/users/generate",
+    "title": "Generate AI quotes",
+    "name": "Post_Generate",
+    "group": "Users",
+    "description": "<p>This endpoint is open to all users to generate random quotes given a character using AI and returns a list of 10 AI generated Quotes.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Quote",
+            "description": "<p>Request Object</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "Quote.genChar",
+            "description": "<p>Character from the Approved list</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input ",
+          "content": "{\n  \"genChar\": \"bart\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Array Housing 10 Quotes that match the searchValue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Objects",
+            "optional": false,
+            "field": "Response.Quote",
+            "description": "<p>Quote Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.charname",
+            "description": "<p>Character name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.quote",
+            "description": "<p>The generated quote</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n [\n   {\n     \"quote\": \"i love a lot of them but i was being idea.\"\n   },\n   {\n     \"quote\": \"(thoughtful) oh. i made a new fight. i'm just a little baby\"\n   },\n   {\n     \"quote\": \"a lot of it just turned the job from.\"\n   },\n   {\n     \"quote\": \"(chuckles) okay in your heart... and i've been hearing about it.\"\n   },\n   {\n     \"quote\": \"(earnest) i can't believe a thousand dollars of a bit faith.\"\n   },\n   {\n     \"quote\": \"i can't believe it. (exasperated sound) get 'em\"\n   },\n   {\n     \"quote\": \"(shrugs) i don't have a lot of hearing about the time.\"\n   },\n   {\n     \"quote\": \"the guys who wrote something better like this or lose a good dog.\"\n   },\n   {\n     \"quote\": \"(shouts) it's the first thing you're take care!\"\n   },\n   {\n     \"quote\": \"(horrified) a kid killed an axe. (shudders) but\"\n   }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "404",
+            "description": "<p>That character can not be used to generate a quote, please select another from the list.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Internal Server Error\n{\n   message: \"That character can not be used to generate a quote, please select another from the list.\",\n   list:[\n      'homer', \n      'marge', \n      'bart', \n      'lisa', \n      'moe', \n      'grampa', \n      'skinner'\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
+  },
+  {
+    "type": "post",
+    "url": "/users/search",
+    "title": "Search Database for Quotes",
+    "name": "Post_Search",
+    "group": "Users",
+    "description": "<p>This endpoint is open to all users to Search for simpsons quotes using our algorithm, and returns a list of 10 Quotes from the DB.</p>",
+    "permission": [
+      {
+        "name": "Users"
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "Quote",
+            "description": "<p>Request Object</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "Quote.searchValue",
+            "description": "<p>String that will be used by the algorithm to search DB</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input ",
+          "content": "{\n  \"searchValue\": \"The Magic\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "Response",
+            "description": "<p>Array Housing 10 Quotes that match the searchValue</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Objects",
+            "optional": false,
+            "field": "Response.Quote",
+            "description": "<p>Quote Object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.episode_title",
+            "description": "<p>Title of the quotes Episode</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.number_in_season",
+            "description": "<p>Which episode number in each season</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.quote_id",
+            "description": "<p>Quotes Unique ID</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.raw_character_text",
+            "description": "<p>Character speaking the quote</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "Response.Quote.season",
+            "description": "<p>Season the quote is from</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "Response.Quote.spoken_words",
+            "description": "<p>The quote</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n[\n  {\n   'episode_title': 'Homer Defined',\n   'number_in_season': 5,\n   'quote_id': 12037,\n   'raw_character_text': 'Homer Simpson',\n   'season': 3,\n   'spoken_words': 'Thanks, Magic.'\n },\n {\n   'episode_title': 'A Tale of Two Springfields',\n   'number_in_season': 2,\n   'quote_id': 71922,\n   'raw_character_text': 'Homer Simpson',\n   'season': 12,\n   'spoken_words': 'Magic Bus!'\n },\n {\n   'episode_title': 'The Great Money Caper',\n   'number_in_season': 7,\n   'quote_id': 73298,\n   'raw_character_text': 'Homer Simpson',\n   'season': 12,\n   'spoken_words': \"Oh, right, the magic. The magic was great. It's really... the way to go.\"\n },\n {\n   'episode_title': 'Treehouse of Horror XII',\n   'number_in_season': 1,\n   'quote_id': 78098,\n   'raw_character_text': 'Lisa Simpson',\n   'season': 13,\n   'spoken_words': \"This isn't my wand. It's a Twizzler!\"\n },\n {\n   'episode_title': 'The Italian Bob',\n   'number_in_season': 8,\n   'quote_id': 104620,\n   'raw_character_text': 'Homer Simpson',\n   'season': 17,\n   'spoken_words': \"I know, and he's magic!\"\n },\n {\n   'episode_title': 'Elementary School Musical',\n   'number_in_season': 1,\n   'quote_id': 130924,\n   'raw_character_text': 'Kurt Hardwick',\n   'season': 22,\n   'spoken_words': 'The magic of art.'\n },\n {\n   'episode_title': 'The Fight Before Christmas',\n   'number_in_season': 8,\n   'quote_id': 132714,\n   'raw_character_text': 'Martha Stewart',\n   'season': 22,\n   'spoken_words': \"Well, thanks for wasting my time. I'll just wave my magic wand and turn everything back the way it was!\"\n },\n {\n   'episode_title': 'The Fight Before Christmas',\n   'number_in_season': 8,\n   'quote_id': 132715,\n   'raw_character_text': 'Marge Simpson',\n   'season': 22,\n   'spoken_words': 'You have a magic wand?'\n },\n {\n   'episode_title': 'The Book Job',\n   'number_in_season': 6,\n   'quote_id': 137953,\n   'raw_character_text': 'Seymour Skinner',\n   'season': 23,\n   'spoken_words': \"But it's actually magic!\"\n \n },\n {\n  'episode_title': 'White Christmas Blues',\n  'number_in_season': 8,\n  'quote_id': 150568,\n  'raw_character_text': 'Bart Simpson',\n  'season': 25,\n  'spoken_words': 'And wand.'\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "500",
+            "description": "<p>Failed to submit one or more REQUIRED field</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   message: \"Error Sending out search String for query.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./api/routes/users/usersRoutes.js",
+    "groupTitle": "Users"
   }
 ]

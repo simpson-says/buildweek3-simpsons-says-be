@@ -4,9 +4,10 @@
 	"description": "Simpson Search Algorithm",
 	"main": "index.js",
 	"scripts": {
-		"server": "nodemon index.js DB_ENV=development",
-		"test": "cross-env DB_ENV=testing && yarn knex migrate:latest && jest --watchAll --verbose",
-		"start": "node index.js"
+		"server": "nodemon index.js DB_ENV=development && surge -p docs -d simpsonsaysapidocs.surge.sh",
+		"test": "cross-env DB_ENV=testing && yarn knex migrate:latest --env testing && jest --watchAll --verbose",
+		"start": "node index.js && surge -p docs -d simpsonsaysapidocs.surge.sh",
+		"reset-dev-DB": "yarn knex migrate:rollback && yarn knex migrate:latest && yarn knex seed:run"
 	},
 	"jest": {
 		"testEnvironment": "node"
@@ -23,13 +24,15 @@
 	},
 	"homepage": "https://github.com/OmarSalah95/simpsonsays#readme",
 	"devDependencies": {
+		"apidoc": "^0.17.7",
+		"surge": "^0.20.3",
 		"cross-env": "^5.2.0",
 		"jest": "^23.6.0",
 		"nodemon": "^1.18.11",
 		"supertest": "^3.3.0"
 	},
 	"dependencies": {
-		"apidoc": "^0.17.7",
+		"axios": "^0.18.0",
 		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
 		"dotenv": "^7.0.0",
@@ -39,5 +42,14 @@
 		"knex": "^0.16.3",
 		"pg": "^7.9.0",
 		"sqlite3": "^4.0.6"
+	},
+	"apidoc": {
+		"title": "Simpson Says Docs",
+		"url": "https://simpson-says-backend.herokuapp.com",
+		"order": [
+			"Authentication",
+			"Users",
+			"Admin"
+		]
 	}
 }
